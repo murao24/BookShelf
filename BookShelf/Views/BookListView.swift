@@ -33,7 +33,10 @@ struct BookListView: View {
                         .frame(width: 20, height: 20)
                 }
                 .sheet(isPresented: $isActionSheet, content: {
-                    SubmitBookView()
+                    SubmitBookView(bookCellVM: BookCellViewModel(book: Book(title: "", author: ""))) { book in
+                        self.bookListVM.submitBook(book: book)
+                        self.isActionSheet.toggle()
+                    }
                 })
             )
         }
@@ -61,13 +64,25 @@ struct BookCell: View {
 }
 
 struct SubmitBookView: View {
-    @State private var title: String = ""
-    @State private var author: String = ""
+
+    @ObservedObject var bookCellVM: BookCellViewModel
+
+    var onCommit: (Book) -> (Void) = { _ in }
 
     var body: some View {
-        Form {
-            TextField("Enter book title", text: $title)
-            TextField("Enter book author", text: $author)
+        NavigationView {
+            Form {
+                TextField("Enter book title", text: $bookCellVM.book.title)
+                TextField("Enter book author", text: $bookCellVM.book.author)
+            }
+        .navigationBarTitle("Submit a book")
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.onCommit(self.bookCellVM.book)
+                }) {
+                    Text("done")
+                }
+            )
         }
     }
 

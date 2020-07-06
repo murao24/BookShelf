@@ -20,4 +20,9 @@ class BookListViewModel: ObservableObject {
         }
     }
 
+    func submitBook(book: Book) {
+        let bookVM = BookCellViewModel(book: book)
+        self.bookCellViewModels.append(bookVM)
+    }
+
 }
