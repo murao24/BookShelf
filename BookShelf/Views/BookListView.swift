@@ -25,25 +25,15 @@ struct BookListView: View {
                     }
                 }
                 .navigationBarTitle("BookShelf")
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        self.isActionSheet.toggle()
-                    }) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                    }
-                    .sheet(isPresented: $isActionSheet, content: {
-                        SearchBookView(bookCellVM: BookCellViewModel(book: Book(title: "", author: ""))) { book in
-                            self.bookListVM.submitBook(book: book)
-                            self.isActionSheet.toggle()
-                        }
-                    })
-                )
             }
             .tabItem {
                 Image(systemName: "book")
-                Text("bookShelf")
+                Text("BookShelf")
+            }
+            SearchBookView()
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
             }
         }
     }

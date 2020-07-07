@@ -10,37 +10,62 @@ import SwiftUI
 
 struct SearchBookView: View {
 
-    @ObservedObject var bookCellVM: BookCellViewModel
-
-    var onCommit: (Book) -> (Void) = { _ in }
+    @State private var searchText: String = ""
 
     var body: some View {
-        TabView {
-            NavigationView {
-                Form {
-                    TextField("Enter book title", text: $bookCellVM.book.title)
-                    TextField("Enter book author", text: $bookCellVM.book.author)
-                }
-                .navigationBarTitle("Submit a book")
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        self.onCommit(self.bookCellVM.book)
-                    }) {
-                        Text("done")
-                    }
-                )
-            }
-            .tabItem {
-                Image(systemName: "magnifyingglass")
-                Text("Search books")
+        NavigationView {
+            VStack {
+                SearchBar(text: $searchText, placeholder: "Search books")
+                Spacer()
+                Text(searchText)
+                Spacer()
+                    .navigationBarTitle("Search books")
             }
         }
-    }
 
+    }
 }
+
 
 struct SearchBookView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookView(bookCellVM: BookCellViewModel(book: Book(title: "", author: "")))
+        SearchBookView()
     }
+}
+
+struct SearchBar: UIViewRepresentable {
+    @Binding var text: String
+    var placeholder: String
+
+
+    class Cordinator: NSObject, UISearchBarDelegate {
+        @Binding var text: String
+
+        init(text: Binding<String>) {
+            _text = text
+        }
+
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            text = searchText
+        }
+
+    }
+
+    func makeCoordinator() -> SearchBar.Cordinator {
+        return Cordinator(text: $text)
+    }
+
+    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
+        let searchBar = UISearchBar(frame: .zero)
+        searchBar.delegate = context.coordinator
+        searchBar.placeholder = placeholder
+        searchBar.searchBarStyle = .minimal
+        searchBar.autocapitalizationType = .none
+        return searchBar
+    }
+
+    func updateUIView(_ uiView: UISearchBar, context:  UIViewRepresentableContext<SearchBar>) {
+        uiView.text = text
+    }
+
 }

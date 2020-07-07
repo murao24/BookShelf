@@ -10,5 +10,7 @@ target 'BookShelf' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'SwiftyJSON'
+  pod 'SDWebImageSwiftUI'
 
 end
