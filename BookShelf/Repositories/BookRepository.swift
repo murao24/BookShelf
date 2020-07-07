@@ -23,7 +23,11 @@ class BookRepository: ObservableObject {
 
     func loadData() {
 
+        let userId = Auth.auth().currentUser?.uid
+
         db.collection("books")
+            .order(by: "createdTime", descending: true)
+            .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     self.books = querySnapshot.documents.compactMap { document in
@@ -38,6 +42,16 @@ class BookRepository: ObservableObject {
                 }
         }
 
+    }
+
+    func addBook(_ book: Book) {
+        do {
+            var addedBook = book
+            addedBook.userId = Auth.auth().currentUser?.uid
+            let _ = try db.collection("books").addDocument(from: addedBook)
+        } catch {
+            fatalError("Unable to encode book: \(error.localizedDescription)")
+        }
     }
 
 }

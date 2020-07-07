@@ -12,9 +12,9 @@ import Combine
 class BookListViewModel: ObservableObject {
     @Published var bookRepository = BookRepository()
     @Published var bookCellViewModels = [BookCellViewModel]()
-    
+
     private var cancellables = Set<AnyCancellable>()
-    
+
     init() {
         bookRepository.$books
             .map { books in
@@ -25,10 +25,9 @@ class BookListViewModel: ObservableObject {
         .assign(to: \.bookCellViewModels, on: self)
         .store(in: &cancellables)
     }
-    
+
     func submitBook(book: Book) {
-        let bookVM = BookCellViewModel(book: book)
-        self.bookCellViewModels.append(bookVM)
+        bookRepository.addBook(book)
     }
-    
+
 }

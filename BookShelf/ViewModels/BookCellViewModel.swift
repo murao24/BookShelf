@@ -21,7 +21,7 @@ class BookCellViewModel: ObservableObject, Identifiable {
 
         // id に保持
         $book
-            .map { book in
+            .compactMap { book in
                 book.id
         }
         .assign(to: \.id, on: self)

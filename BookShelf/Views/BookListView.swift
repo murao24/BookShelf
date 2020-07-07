@@ -17,28 +17,34 @@ struct BookListView: View {
     let books = testDataBooks
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(bookListVM.bookCellViewModels) { bookCellVM in
-                    BookCell(bookCellVM: bookCellVM)
-                }
-            }
-            .navigationBarTitle("BookShelf")
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.isActionSheet.toggle()
-                }) {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                }
-                .sheet(isPresented: $isActionSheet, content: {
-                    SubmitBookView(bookCellVM: BookCellViewModel(book: Book(title: "", author: ""))) { book in
-                        self.bookListVM.submitBook(book: book)
-                        self.isActionSheet.toggle()
+        TabView {
+            NavigationView {
+                List {
+                    ForEach(bookListVM.bookCellViewModels) { bookCellVM in
+                        BookCell(bookCellVM: bookCellVM)
                     }
-                })
-            )
+                }
+                .navigationBarTitle("BookShelf")
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.isActionSheet.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+                    .sheet(isPresented: $isActionSheet, content: {
+                        SearchBookView(bookCellVM: BookCellViewModel(book: Book(title: "", author: ""))) { book in
+                            self.bookListVM.submitBook(book: book)
+                            self.isActionSheet.toggle()
+                        }
+                    })
+                )
+            }
+            .tabItem {
+                Image(systemName: "book")
+                Text("bookShelf")
+            }
         }
     }
 }
@@ -63,27 +69,4 @@ struct BookCell: View {
     }
 }
 
-struct SubmitBookView: View {
 
-    @ObservedObject var bookCellVM: BookCellViewModel
-
-    var onCommit: (Book) -> (Void) = { _ in }
-
-    var body: some View {
-        NavigationView {
-            Form {
-                TextField("Enter book title", text: $bookCellVM.book.title)
-                TextField("Enter book author", text: $bookCellVM.book.author)
-            }
-        .navigationBarTitle("Submit a book")
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.onCommit(self.bookCellVM.book)
-                }) {
-                    Text("done")
-                }
-            )
-        }
-    }
-
-}
