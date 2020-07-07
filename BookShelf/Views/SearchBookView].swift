@@ -10,6 +10,8 @@ import SwiftUI
 
 struct SearchBookView: View {
 
+    @ObservedObject var searchBookViewModel = SearchBookViewModel()
+
     @State private var searchText: String = ""
 
     var body: some View {
@@ -20,6 +22,11 @@ struct SearchBookView: View {
                 Text(searchText)
                 Spacer()
                     .navigationBarTitle("Search books")
+            }
+            .onAppear {
+                for i in self.searchBookViewModel.data {
+                    print(i.authors)
+                }
             }
         }
 

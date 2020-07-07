@@ -14,8 +14,6 @@ struct BookListView: View {
 
     @State var isActionSheet: Bool = false
 
-    let books = testDataBooks
-
     var body: some View {
         TabView {
             NavigationView {

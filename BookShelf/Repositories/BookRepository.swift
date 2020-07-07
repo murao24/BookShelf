@@ -27,7 +27,7 @@ class BookRepository: ObservableObject {
 
         db.collection("books")
             .order(by: "createdTime", descending: true)
-            .whereField("userId", isEqualTo: userId)
+            .whereField("userId", isEqualTo: userId!)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     self.books = querySnapshot.documents.compactMap { document in

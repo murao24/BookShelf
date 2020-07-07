@@ -8,26 +8,56 @@
 
 import Foundation
 import Combine
+import SwiftyJSON
 
+class SearchBookViewModel: ObservableObject {
 
-class SearchBookViewModel {
+    @Published var data = [SearchedBook]()
 
     var commponents: URLComponents {
         var commponents = URLComponents()
         commponents.scheme = "https"
         commponents.host = "www.googleapis.com"
         commponents.path = "/books/v1/volumes"
-        commponents.queryItems = [URLQueryItem(name: "q", value: "マリアビートル")]
+        commponents.queryItems = [URLQueryItem(name: "q", value: "伊坂幸太郎")]
         return commponents
     }
 
-//    func fetchData() -> AnyPublisher<BookContainer, Error> {
-//        return URLSession.shared.dataTaskPublisher(for: commponents.url!)
-//            .map { $0.data }
-//            .decode(type: BookContainer.self, decoder: JSONDecoder())
-//            .receive(on: DispatchQueue.main)
-//            .eraseToAnyPublisher()
-//    }
+
+    init() {
+
+        let urlSession = URLSession(configuration: .default)
+
+        urlSession.dataTask(with: commponents.url!) { (data, _, error) in
+            guard error == nil else  {
+                print((error?.localizedDescription)!)
+                return
+            }
+
+            let json = try! JSON(data: data!)
+            let items = json["items"].array!
+
+            for i in items {
+                let id = i["id"].stringValue
+                let title = i["volumeInfo"]["title"].stringValue
+                let authors = i["volumeInfo"]["authors"].array!
+                var author = ""
+
+                for j in authors {
+                    author += "\(j.stringValue)"
+                }
+
+                let description = i["volumeInfo"]["description"].stringValue
+                let imageURL = i["volumeInfo"]["imageLinks"]["thumbnail"].stringValue
+
+                DispatchQueue.main.async {
+                    self.data.append(SearchedBook(id: id, title: title, authors: author, description: description, imageURL: imageURL))
+                }
+            }
+
+        }.resume()
+
+    }
 
 }
 
