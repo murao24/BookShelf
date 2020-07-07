@@ -10,19 +10,25 @@ import Foundation
 import Combine
 
 class BookListViewModel: ObservableObject {
+    @Published var bookRepository = BookRepository()
     @Published var bookCellViewModels = [BookCellViewModel]()
-
+    
     private var cancellables = Set<AnyCancellable>()
-
+    
     init() {
-        self.bookCellViewModels = testDataBooks.map { book in
-            BookCellViewModel(book: book)
+        bookRepository.$books
+            .map { books in
+                books.map { book in
+                    BookCellViewModel(book: book)
+                }
         }
+        .assign(to: \.bookCellViewModels, on: self)
+        .store(in: &cancellables)
     }
-
+    
     func submitBook(book: Book) {
         let bookVM = BookCellViewModel(book: book)
         self.bookCellViewModels.append(bookVM)
     }
-
+    
 }
