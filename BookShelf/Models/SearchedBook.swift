@@ -14,4 +14,5 @@ struct SearchedBook: Identifiable, Hashable {
     var authors: String
     var description: String
     var imageURL: String
+    var previewLink: String
 }

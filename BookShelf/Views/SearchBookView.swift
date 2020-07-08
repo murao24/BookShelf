@@ -24,15 +24,18 @@ struct SearchBookView: View {
                     ForEach(searchBookViewModel.data, id: \.self) { data in
                         HStack {
                             if data.imageURL != "" {
-                                WebImage(url: URL(string: data.imageURL))
-                                    .resizable()
-                                    .frame(width: 120, height: 170)
-                                    .cornerRadius(10)
+                                WebImage(url: URL(string: data.imageURL)!)
+                                .resizable()
+                                .frame(width: 120, height: 170)
+                                .cornerRadius(10)
                             } else {
-                                Image(systemName: "book")
-                                    .resizable()
-                                    .frame(width: 120, height: 170)
-                                    .cornerRadius(10)
+                                VStack {
+                                    Image(systemName: "book")
+                                        .resizable()
+                                        .frame(width: 110, height: 140)
+                                        .cornerRadius(10)
+                                    Text("No Image")
+                                }
                             }
                             VStack {
                                 Text(data.title)

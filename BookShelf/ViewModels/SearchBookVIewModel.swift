@@ -21,7 +21,7 @@ class SearchBookViewModel: ObservableObject {
         commponents.scheme = "https"
         commponents.host = "www.googleapis.com"
         commponents.path = "/books/v1/volumes"
-        commponents.queryItems = [URLQueryItem(name: "q", value: searchText)]
+        commponents.queryItems = [URLQueryItem(name: "q", value: searchText), URLQueryItem(name: "maxResults", value: "30")]
         return commponents
     }
 
@@ -50,14 +50,14 @@ class SearchBookViewModel: ObservableObject {
                 if let authors = i["volumeInfo"]["authors"].array {
                     author = authors.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
                 } else {
-                    author = "著者情報がありません"
+                    author = "No author information is available."
                 }
 
                 let description = i["volumeInfo"]["description"].stringValue
                 let imageURL = i["volumeInfo"]["imageLinks"]["thumbnail"].stringValue
-
+                let previewLink = i["volumeInfo"]["previewLink"].stringValue
                 DispatchQueue.main.async {
-                    self.data.append(SearchedBook(id: id, title: title, authors: author, description: description, imageURL: imageURL))
+                    self.data.append(SearchedBook(id: id, title: title, authors: author, description: description, imageURL: imageURL, previewLink: previewLink))
                 }
             }
         }.resume()
