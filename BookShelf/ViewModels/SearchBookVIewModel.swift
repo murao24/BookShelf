@@ -21,7 +21,7 @@ class SearchBookViewModel: ObservableObject {
         commponents.scheme = "https"
         commponents.host = "www.googleapis.com"
         commponents.path = "/books/v1/volumes"
-        commponents.queryItems = [URLQueryItem(name: "q", value: searchText), URLQueryItem(name: "maxResults", value: "30")]
+        commponents.queryItems = [URLQueryItem(name: "q", value: searchText), URLQueryItem(name: "maxResults", value: "40")]
         return commponents
     }
 

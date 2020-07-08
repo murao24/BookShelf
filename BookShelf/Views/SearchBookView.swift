@@ -38,8 +38,10 @@ struct SearchBookView: View {
                                 }
                             }
                             VStack {
+                                Spacer()
                                 Text(data.title)
                                 Text(data.authors)
+                                Spacer()
                                 Text(data.description)
                                     .font(.caption)
                                     .lineLimit(4)
