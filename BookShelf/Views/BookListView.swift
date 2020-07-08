@@ -15,24 +15,13 @@ struct BookListView: View {
     @State var isActionSheet: Bool = false
 
     var body: some View {
-        TabView {
-            NavigationView {
-                List {
-                    ForEach(bookListVM.bookCellViewModels) { bookCellVM in
-                        BookCell(bookCellVM: bookCellVM)
-                    }
+        NavigationView {
+            List {
+                ForEach(bookListVM.bookCellViewModels) { bookCellVM in
+                    BookCell(bookCellVM: bookCellVM)
                 }
-                .navigationBarTitle("BookShelf")
             }
-            .tabItem {
-                Image(systemName: "book")
-                Text("BookShelf")
-            }
-            SearchBookView()
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("Search")
-            }
+            .navigationBarTitle("BookShelf")
         }
     }
 }

@@ -14,21 +14,26 @@ class SearchBookViewModel: ObservableObject {
 
     @Published var data = [SearchedBook]()
 
+    @Published var searchText: String = ""
+
     var commponents: URLComponents {
         var commponents = URLComponents()
         commponents.scheme = "https"
         commponents.host = "www.googleapis.com"
         commponents.path = "/books/v1/volumes"
-        commponents.queryItems = [URLQueryItem(name: "q", value: "伊坂幸太郎")]
+        commponents.queryItems = [URLQueryItem(name: "q", value: searchText)]
         return commponents
     }
 
 
-    init() {
+    func fetchData()  {
+        guard let url = commponents.url else { return }
+
+        data = [SearchedBook]()
 
         let urlSession = URLSession(configuration: .default)
 
-        urlSession.dataTask(with: commponents.url!) { (data, _, error) in
+        urlSession.dataTask(with: url) { (data, _, error) in
             guard error == nil else  {
                 print((error?.localizedDescription)!)
                 return
@@ -40,11 +45,12 @@ class SearchBookViewModel: ObservableObject {
             for i in items {
                 let id = i["id"].stringValue
                 let title = i["volumeInfo"]["title"].stringValue
-                let authors = i["volumeInfo"]["authors"].array!
-                var author = ""
 
-                for j in authors {
-                    author += "\(j.stringValue)"
+                var author = ""
+                if let authors = i["volumeInfo"]["authors"].array {
+                    author = authors.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+                } else {
+                    author = "著者情報がありません"
                 }
 
                 let description = i["volumeInfo"]["description"].stringValue
@@ -54,9 +60,7 @@ class SearchBookViewModel: ObservableObject {
                     self.data.append(SearchedBook(id: id, title: title, authors: author, description: description, imageURL: imageURL))
                 }
             }
-
         }.resume()
-
     }
 
 }
