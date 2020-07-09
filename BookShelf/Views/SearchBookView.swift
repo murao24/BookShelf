@@ -8,12 +8,15 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import WebKit
 
 struct SearchBookView: View {
 
     @ObservedObject var searchBookViewModel = SearchBookViewModel()
 
     @State private var searchText: String = ""
+    @State var url = ""
+    @State var isSheetShown = false
 
     var body: some View {
         NavigationView {
@@ -22,31 +25,10 @@ struct SearchBookView: View {
                 Spacer()
                 List {
                     ForEach(searchBookViewModel.data, id: \.self) { data in
-                        HStack {
-                            if data.imageURL != "" {
-                                WebImage(url: URL(string: data.imageURL)!)
-                                .resizable()
-                                .frame(width: 120, height: 170)
-                                .cornerRadius(10)
-                            } else {
-                                VStack {
-                                    Image(systemName: "book")
-                                        .resizable()
-                                        .frame(width: 110, height: 140)
-                                        .cornerRadius(10)
-                                    Text("No Image")
-                                }
-                            }
-                            VStack {
-                                Spacer()
-                                Text(data.title)
-                                Text(data.authors)
-                                Spacer()
-                                Text(data.description)
-                                    .font(.caption)
-                                    .lineLimit(4)
-                                    .multilineTextAlignment(.leading)
-                            }
+                        SearchedBookCell(data: data)
+                            .onTapGesture {
+                                self.url = data.imageURL
+                                self.isSheetShown.toggle()
                         }
                     }
                 }
@@ -66,6 +48,43 @@ struct SearchBookView: View {
 struct SearchBookView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookView()
+    }
+}
+
+
+struct SearchedBookCell: View {
+
+    var data: SearchedBook
+
+    var body: some View {
+        HStack {
+            if data.imageURL != "" {
+                WebImage(url: URL(string: data.imageURL)!)
+                    .resizable()
+                    .frame(width: 120, height: 170)
+                    .cornerRadius(10)
+            } else {
+                VStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .cornerRadius(10)
+                    Text("No Image")
+                        .font(.subheadline)
+                }
+                .frame(width: 120, height: 170)
+            }
+            VStack(alignment: .center) {
+                Spacer()
+                Text(data.title)
+                Text(data.authors)
+                Spacer()
+                Text(data.description)
+                    .font(.caption)
+                    .lineLimit(4)
+                    .multilineTextAlignment(.leading)
+            }
+        }
     }
 }
 
@@ -92,7 +111,9 @@ struct SearchBar: UIViewRepresentable {
 
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             searchBar.resignFirstResponder()
-            searchBar.showsCancelButton = false
+            if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton {
+                cancelButton.isEnabled = true
+            }
             searchBar.endEditing(true)
             if let text = searchBar.text {
                 onCommit(text)
@@ -100,10 +121,11 @@ struct SearchBar: UIViewRepresentable {
         }
 
         func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            searchBar.text = ""
+            text = ""
             searchBar.resignFirstResponder()
             searchBar.showsCancelButton = false
             searchBar.endEditing(true)
+            onCommit("")
         }
 
     }
@@ -126,5 +148,6 @@ struct SearchBar: UIViewRepresentable {
     }
 
 }
+
 
 
