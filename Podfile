@@ -12,5 +12,6 @@ target 'BookShelf' do
   pod 'FirebaseFirestoreSwift'
   pod 'SwiftyJSON'
   pod 'SDWebImageSwiftUI'
+  pod 'IQKeyboardManagerSwift'
 
 end

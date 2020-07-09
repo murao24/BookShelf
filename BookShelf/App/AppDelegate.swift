@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         //匿名認証
         Auth.auth().signInAnonymously()
+
+        // IQkeyboardManager
+        IQKeyboardManager.shared.enable = true
 
         return true
     }
