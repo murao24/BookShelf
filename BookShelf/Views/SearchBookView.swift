@@ -27,10 +27,14 @@ struct SearchBookView: View {
                     ForEach(searchBookViewModel.data, id: \.self) { data in
                         SearchedBookCell(data: data)
                             .onTapGesture {
-                                self.url = data.imageURL
+                                self.url = data.previewLink
+                                print(self.url)
                                 self.isSheetShown.toggle()
                         }
                     }
+                }
+                .sheet(isPresented: self.$isSheetShown) {
+                    WebView(urlString: self.url)
                 }
                 Spacer()
                     .navigationBarTitle("Search books")
@@ -150,4 +154,21 @@ struct SearchBar: UIViewRepresentable {
 }
 
 
+struct WebView: UIViewRepresentable {
 
+    let urlString: String?
+
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        if let urlString = urlString {
+            if let url = URL(string: urlString) {
+                let request = URLRequest(url: url)
+                uiView.load(request)
+            }
+        }
+    }
+
+}
