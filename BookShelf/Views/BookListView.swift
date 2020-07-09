@@ -21,7 +21,17 @@ struct BookListView: View {
                     BookCell(bookCellVM: bookCellVM)
                 }
             }
+            .sheet(isPresented: self.$isActionSheet) {
+                SubmitBookView()
+            }
             .navigationBarTitle("BookShelf")
+            .navigationBarItems(trailing:
+                Button(action: { self.isActionSheet.toggle() }) {
+                    Image(systemName: "plus")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+            )
         }
     }
 }

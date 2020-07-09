@@ -28,7 +28,6 @@ struct SearchBookView: View {
                         SearchedBookCell(data: data)
                             .onTapGesture {
                                 self.url = data.previewLink
-                                print(self.url)
                                 self.isSheetShown.toggle()
                         }
                     }
@@ -92,83 +91,3 @@ struct SearchedBookCell: View {
     }
 }
 
-struct SearchBar: UIViewRepresentable {
-    @Binding var text: String
-    var placeholder: String
-
-    var onCommit: (String) -> Void
-
-    class Cordinator: NSObject, UISearchBarDelegate {
-        @Binding var text: String
-
-        var onCommit: (String) -> Void
-
-        init(text: Binding<String>, onCommit: @escaping (String) -> Void) {
-            _text = text
-            self.onCommit = onCommit
-        }
-
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            text = searchText
-            searchBar.showsCancelButton = true
-        }
-
-        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            searchBar.resignFirstResponder()
-            if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton {
-                cancelButton.isEnabled = true
-            }
-            searchBar.endEditing(true)
-            if let text = searchBar.text {
-                onCommit(text)
-            }
-        }
-
-        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            text = ""
-            searchBar.resignFirstResponder()
-            searchBar.showsCancelButton = false
-            searchBar.endEditing(true)
-            onCommit("")
-        }
-
-    }
-
-    func makeCoordinator() -> SearchBar.Cordinator {
-        return Cordinator(text: $text, onCommit: onCommit)
-    }
-
-    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
-        let searchBar = UISearchBar(frame: .zero)
-        searchBar.delegate = context.coordinator
-        searchBar.placeholder = placeholder
-        searchBar.searchBarStyle = .minimal
-        searchBar.autocapitalizationType = .none
-        return searchBar
-    }
-
-    func updateUIView(_ uiView: UISearchBar, context:  UIViewRepresentableContext<SearchBar>) {
-        uiView.text = text
-    }
-
-}
-
-
-struct WebView: UIViewRepresentable {
-
-    let urlString: String?
-
-    func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        if let urlString = urlString {
-            if let url = URL(string: urlString) {
-                let request = URLRequest(url: url)
-                uiView.load(request)
-            }
-        }
-    }
-
-}
