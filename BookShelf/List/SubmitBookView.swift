@@ -16,8 +16,12 @@ struct SubmitBookView: View {
     @State var title: String = ""
     @State var author: String = ""
     @State var rating: Int = 3
+    @State var start: Date = Date()
+    @State var end: Date = Date()
     @State var reviews: String = ""
     @State var isNavigationBarHidden = false
+    @State var isAlertShown = false
+    @State var errorMessage = ""
 
 
     var body: some View {
@@ -26,7 +30,13 @@ struct SubmitBookView: View {
                 Section(header: Text("Book information")) {
                     TextField("Title", text: self.$title)
                     TextField("Author", text: self.$author)
+                }
+                Section(header: Text("Rating")) {
                     RatingsView(rating: self.$rating)
+                }
+                Section(header: Text("Date")) {
+                    DatePicker("Start Date", selection: self.$start, displayedComponents: .date)
+                    DatePicker("Ends Date", selection: self.$end, displayedComponents: .date)
                 }
                 Section(header: Text("Book reviews")) {
                     MultilineTextField(text: self.$reviews, isNavigationBarHidden: self.$isNavigationBarHidden)
@@ -35,6 +45,14 @@ struct SubmitBookView: View {
                             self.isNavigationBarHidden = true
                     }
                 }
+            }
+            .alert(isPresented: $isAlertShown) {
+                Alert(
+                    title: Text("Alert"),
+                    message: Text(self.errorMessage),
+                    dismissButton: .destructive(Text("Reregistration"))
+                )
+
             }
             .navigationBarTitle("Submit a book")
             .navigationBarHidden(isNavigationBarHidden)
@@ -46,13 +64,34 @@ struct SubmitBookView: View {
                     Text("Cancel")
                 }, trailing:
                 Button(action: {
-                    //　firebaseについか
-                    self.bookListVM.submitBook(book: Book(title: self.title, author: self.author, rating: self.rating, reviews: self.reviews))
+                    //　firebaseに追加
+                    self.addBook()
                     self.presentatinoMode.wrappedValue.dismiss()
                 }) {
                     Text("Done")
                 }
             )
+        }
+    }
+
+    enum ErrorMessage: String {
+        case title = "Please enter the title."
+        case author = "Please enter the author."
+        case date = "There is a discrepancy in the dates."
+    }
+
+    func addBook() {
+        if title == "" || author == "" || start > end {
+            if title == "" {
+                self.errorMessage = ErrorMessage.title.rawValue
+            } else if author == "" {
+                self.errorMessage = ErrorMessage.author.rawValue
+            } else if start > end {
+                self.errorMessage = ErrorMessage.date.rawValue
+            }
+            self.isAlertShown.toggle()
+        } else {
+            self.bookListVM.submitBook(book: Book(title: self.title, author: self.author, rating: self.rating, reviews: self.reviews, start: self.start, end: self.end))
         }
     }
 }
