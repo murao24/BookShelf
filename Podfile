@@ -13,5 +13,5 @@ target 'BookShelf' do
   pod 'SwiftyJSON'
   pod 'SDWebImageSwiftUI'
   pod 'IQKeyboardManagerSwift'
-
+  pod 'Cosmos'
 end
