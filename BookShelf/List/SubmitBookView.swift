@@ -9,6 +9,10 @@
 import SwiftUI
 
 struct SubmitBookView: View {
+
+    @ObservedObject var bookListVM = BookListViewModel()
+
+    @Environment(\.presentationMode) var presentatinoMode
     @State var title: String = ""
     @State var author: String = ""
     @State var rating: String = ""
@@ -24,10 +28,25 @@ struct SubmitBookView: View {
                 }
                 Section(header: Text("Book reviews")) {
                     MultilineTextField(text: self.$reviews)
-                        .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
+                        .frame(width: UIScreen.main.bounds.width * 0.9, height: 250)
                 }
             }
             .navigationBarTitle("Submit a book")
+            .navigationBarItems(
+                leading:
+                Button(action: {
+                    self.presentatinoMode.wrappedValue.dismiss()
+                }) {
+                    Text("Cancel")
+                }, trailing:
+                Button(action: {
+                    //　firebaseについか
+                    self.bookListVM.submitBook(book: Book(title: self.title, author: self.author))
+                    self.presentatinoMode.wrappedValue.dismiss()
+                }) {
+                    Text("Done")
+                }
+            )
         }
     }
 }
