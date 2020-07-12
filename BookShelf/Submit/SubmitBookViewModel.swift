@@ -12,6 +12,8 @@ import Combine
 
 class SubmitBookViewModel: ObservableObject {
 
+    @Published var repository = BookRepository()
+
     @Published var title: String = ""
     @Published var author: String = ""
     @Published var rating: Int = 3
@@ -19,25 +21,32 @@ class SubmitBookViewModel: ObservableObject {
     @Published var end: Date = Date()
     @Published var reviews: String = ""
     @Published var isValidated: Bool = false
-    @Published var errorMessage: String = ""
 
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellabels = Set<AnyCancellable>()
 
     init() {
-        Publishers.CombineLatest($title, $author, $start, $end)
+
+        Publishers.CombineLatest4($title, $author, $start, $end)
             .receive(on: RunLoop.main)
             .map { (title, author, start, end) in
-                return title.count > 0 && author.count > 0 && start < end
+                if title == "" {
+                    return false
+                } else if author == "" {
+                    return false
+                } else if start > end {
+                    return false
+                } else {
+                    return true
+                }
         }
         .assign(to: \.isValidated, on: self)
-        .store(in: &cancellables)
+        .store(in: &cancellabels)
+
     }
 
 
-    enum ErrorMessage: String {
-        case title = "Please enter the title."
-        case author = "Please enter the author."
-        case date = "There is a discrepancy in the dates."
+    func submitBook() {
+        repository.addBook(Book(title: title, author: author, rating: rating, reviews: reviews, start: start, end: end))
     }
 
 }

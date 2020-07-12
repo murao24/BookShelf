@@ -20,7 +20,7 @@ struct SubmitBookView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Book information")) {
+                Section(header: SectionHeader(text: "Book information(required)")) {
                     TextField("Title", text: $submitBookVM.title)
                     TextField("Author", text: $submitBookVM.author)
                 }
@@ -39,14 +39,6 @@ struct SubmitBookView: View {
                     }
                 }
             }
-            .alert(isPresented: $submitBookVM.isValidated) {
-                Alert(
-                    title: Text("Alert"),
-                    message: Text(submitBookVM.errorMessage),
-                    dismissButton: .destructive(Text("Reregistration"))
-                )
-
-            }
             .navigationBarTitle("Submit a book")
             .navigationBarHidden(isNavigationBarHidden)
             .navigationBarItems(
@@ -58,10 +50,12 @@ struct SubmitBookView: View {
                 }, trailing:
                 Button(action: {
                     //　firebaseに追加
-                    
+                    self.submitBookVM.submitBook()
                     self.presentatinoMode.wrappedValue.dismiss()
                 }) {
-                    Text("Done")
+                    if submitBookVM.isValidated {
+                        Text("Done")
+                    }
                 }
             )
         }
@@ -140,5 +134,15 @@ struct RatingsView: View {
                 }
             }
         })
+    }
+}
+
+struct SectionHeader: View {
+    let text: String
+    var body: some View {
+        Text(text)
+            .padding()
+            .frame(width: UIScreen.main.bounds.width, height: 28,alignment: .leading)
+            .foregroundColor(Color.red)
     }
 }
