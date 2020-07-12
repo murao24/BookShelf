@@ -54,9 +54,13 @@ class BookRepository: ObservableObject {
         }
     }
     
-    func deleteBook(_ book: Book) {
-        if let bookID = book.id {
-            print(bookID)
+    func deleteBook(bookID: String) {
+        db.collection("books").document(bookID).delete() { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully deleted.")
+            }
         }
     }
     

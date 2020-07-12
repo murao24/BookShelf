@@ -22,7 +22,9 @@ struct BookListView: View {
                         BookCell(bookCellVM: bookCellVM)
                     }
                 }
-                
+                .onDelete { (indexSet) in
+                    self.bookListVM.deleteBook(indexSet)
+                }
             }
             .sheet(isPresented: self.$isActionSheet) {
                 SubmitBookView()
@@ -55,6 +57,7 @@ struct BookCell: View {
             Text(bookCellVM.book.title)
             Spacer()
             Text(bookCellVM.book.author)
+            Text(bookCellVM.book.id!)
         }
     }
 }

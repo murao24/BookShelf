@@ -27,8 +27,15 @@ class BookListViewModel: ObservableObject {
         
     }
 
-    func deleteBook(book: Book) {
-        bookRepository.deleteBook(book)
+    func deleteBook(_ indexSet: IndexSet) {
+
+        if let indexSetFirst = indexSet.first {
+            let id = bookCellViewModels[indexSetFirst].book.id
+            if let id = id {
+                bookRepository.deleteBook(bookID: id)
+            }
+        }
+
     }
 
 }

@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct BookDetailView: View {
+
+    @ObservedObject var bookListVM = BookListViewModel()
+
     var body: some View {
         Text("Hello, World!")
     }
