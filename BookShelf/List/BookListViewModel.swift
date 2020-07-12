@@ -24,10 +24,11 @@ class BookListViewModel: ObservableObject {
         }
         .assign(to: \.bookCellViewModels, on: self)
         .store(in: &cancellables)
+        
     }
 
-    func submitBook(book: Book) {
-        bookRepository.addBook(book)
+    func deleteBook(book: Book) {
+        bookRepository.deleteBook(book)
     }
 
 }

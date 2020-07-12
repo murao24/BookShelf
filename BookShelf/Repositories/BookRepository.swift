@@ -12,19 +12,19 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class BookRepository: ObservableObject {
-
+    
     let db = Firestore.firestore()
-
+    
     @Published var books = [Book]()
-
+    
     init() {
         loadData()
     }
-
+    
     func loadData() {
-
+        
         let userId = Auth.auth().currentUser?.uid
-
+        
         db.collection("books")
             .order(by: "createdTime", descending: true)
             .whereField("userId", isEqualTo: userId!)
@@ -41,9 +41,9 @@ class BookRepository: ObservableObject {
                     }
                 }
         }
-
+        
     }
-
+    
     func addBook(_ book: Book) {
         do {
             var addedBook = book
@@ -53,5 +53,11 @@ class BookRepository: ObservableObject {
             fatalError("Unable to encode book: \(error.localizedDescription)")
         }
     }
-
+    
+    func deleteBook(_ book: Book) {
+        if let bookID = book.id {
+            print(bookID)
+        }
+    }
+    
 }

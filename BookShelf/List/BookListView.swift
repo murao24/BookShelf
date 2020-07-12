@@ -18,8 +18,11 @@ struct BookListView: View {
         NavigationView {
             List {
                 ForEach(bookListVM.bookCellViewModels) { bookCellVM in
-                    BookCell(bookCellVM: bookCellVM)
+                    NavigationLink(destination: BookDetailView()) {
+                        BookCell(bookCellVM: bookCellVM)
+                    }
                 }
+                
             }
             .sheet(isPresented: self.$isActionSheet) {
                 SubmitBookView()

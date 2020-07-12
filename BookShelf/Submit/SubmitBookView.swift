@@ -10,46 +10,39 @@ import SwiftUI
 
 struct SubmitBookView: View {
 
-    @ObservedObject var bookListVM = BookListViewModel()
+    @ObservedObject var submitBookVM = SubmitBookViewModel()
 
     @Environment(\.presentationMode) var presentatinoMode
-    @State var title: String = ""
-    @State var author: String = ""
-    @State var rating: Int = 3
-    @State var start: Date = Date()
-    @State var end: Date = Date()
-    @State var reviews: String = ""
+
     @State var isNavigationBarHidden = false
-    @State var isAlertShown = false
-    @State var errorMessage = ""
 
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Book information")) {
-                    TextField("Title", text: self.$title)
-                    TextField("Author", text: self.$author)
+                    TextField("Title", text: $submitBookVM.title)
+                    TextField("Author", text: $submitBookVM.author)
                 }
                 Section(header: Text("Rating")) {
-                    RatingsView(rating: self.$rating)
+                    RatingsView(rating: $submitBookVM.rating)
                 }
                 Section(header: Text("Date")) {
-                    DatePicker("Start Date", selection: self.$start, displayedComponents: .date)
-                    DatePicker("Ends Date", selection: self.$end, displayedComponents: .date)
+                    DatePicker("Start Date", selection: $submitBookVM.start, displayedComponents: .date)
+                    DatePicker("Ends Date", selection: $submitBookVM.end, displayedComponents: .date)
                 }
                 Section(header: Text("Book reviews")) {
-                    MultilineTextField(text: self.$reviews, isNavigationBarHidden: self.$isNavigationBarHidden)
+                    MultilineTextField(text: $submitBookVM.reviews, isNavigationBarHidden: self.$isNavigationBarHidden)
                         .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
                         .onTapGesture {
                             self.isNavigationBarHidden = true
                     }
                 }
             }
-            .alert(isPresented: $isAlertShown) {
+            .alert(isPresented: $submitBookVM.isValidated) {
                 Alert(
                     title: Text("Alert"),
-                    message: Text(self.errorMessage),
+                    message: Text(submitBookVM.errorMessage),
                     dismissButton: .destructive(Text("Reregistration"))
                 )
 
@@ -65,33 +58,12 @@ struct SubmitBookView: View {
                 }, trailing:
                 Button(action: {
                     //　firebaseに追加
-                    self.addBook()
+                    
                     self.presentatinoMode.wrappedValue.dismiss()
                 }) {
                     Text("Done")
                 }
             )
-        }
-    }
-
-    enum ErrorMessage: String {
-        case title = "Please enter the title."
-        case author = "Please enter the author."
-        case date = "There is a discrepancy in the dates."
-    }
-
-    func addBook() {
-        if title == "" || author == "" || start > end {
-            if title == "" {
-                self.errorMessage = ErrorMessage.title.rawValue
-            } else if author == "" {
-                self.errorMessage = ErrorMessage.author.rawValue
-            } else if start > end {
-                self.errorMessage = ErrorMessage.date.rawValue
-            }
-            self.isAlertShown.toggle()
-        } else {
-            self.bookListVM.submitBook(book: Book(title: self.title, author: self.author, rating: self.rating, reviews: self.reviews, start: self.start, end: self.end))
         }
     }
 }
