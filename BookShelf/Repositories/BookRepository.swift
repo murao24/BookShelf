@@ -53,6 +53,18 @@ class BookRepository: ObservableObject {
             fatalError("Unable to encode book: \(error.localizedDescription)")
         }
     }
+
+    func update(_ book: Book) {
+        if let bookID = book.id {
+            do {
+                var updatedBook = book
+                updatedBook.userId = Auth.auth().currentUser?.uid
+                try db.collection("books").document(bookID).setData(from: updatedBook)
+            } catch {
+                fatalError("Unable to encode book: \(error.localizedDescription)")
+            }
+        }
+    }
     
     func deleteBook(bookID: String) {
         db.collection("books").document(bookID).delete() { error in

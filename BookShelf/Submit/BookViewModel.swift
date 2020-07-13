@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 
-class SubmitBookViewModel: ObservableObject {
+class BookViewModel: ObservableObject {
 
     @Published var repository = BookRepository()
 
@@ -19,7 +19,7 @@ class SubmitBookViewModel: ObservableObject {
     @Published var rating: Int = 3
     @Published var start: Date = Date()
     @Published var end: Date = Date()
-    @Published var reviews: String = ""
+    @Published var review: String = ""
     @Published var isValidated: Bool = false
 
     private var cancellabels = Set<AnyCancellable>()
@@ -44,9 +44,12 @@ class SubmitBookViewModel: ObservableObject {
 
     }
 
-
     func submitBook() {
-        repository.addBook(Book(title: title, author: author, rating: rating, reviews: reviews, start: start, end: end))
+        repository.addBook(Book(title: title, author: author, rating: rating, review: review, start: start, end: end))
+    }
+
+    func updateBook(_ bookID: String?) {
+        repository.update(Book(id: bookID, title: title, author: author, rating: rating, review: review, start: start, end: end))
     }
 
 }

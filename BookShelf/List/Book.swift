@@ -16,7 +16,7 @@ struct Book: Codable, Identifiable {
     var title: String
     var author: String
     var rating: Int
-    var reviews: String
+    var review: String
     var start: Date
     var end: Date
     @ServerTimestamp var createdTime: Timestamp?

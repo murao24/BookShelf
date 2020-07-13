@@ -18,7 +18,7 @@ struct BookListView: View {
         NavigationView {
             List {
                 ForEach(bookListVM.bookCellViewModels) { bookCellVM in
-                    NavigationLink(destination: BookDetailView()) {
+                    NavigationLink(destination: EditBookView(bookCellVM: bookCellVM)) {
                         BookCell(bookCellVM: bookCellVM)
                     }
                 }
@@ -57,7 +57,6 @@ struct BookCell: View {
             Text(bookCellVM.book.title)
             Spacer()
             Text(bookCellVM.book.author)
-            Text(bookCellVM.book.id!)
         }
     }
 }

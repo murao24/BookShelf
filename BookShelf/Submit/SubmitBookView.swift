@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SubmitBookView: View {
 
-    @ObservedObject var submitBookVM = SubmitBookViewModel()
+    @ObservedObject var bookVM = BookViewModel()
 
     @Environment(\.presentationMode) var presentatinoMode
 
@@ -21,18 +21,18 @@ struct SubmitBookView: View {
         NavigationView {
             Form {
                 Section(header: SectionHeader(text: "Book information(required)")) {
-                    TextField("Title", text: $submitBookVM.title)
-                    TextField("Author", text: $submitBookVM.author)
+                    TextField("Title", text: $bookVM.title)
+                    TextField("Author", text: $bookVM.author)
                 }
                 Section(header: Text("Rating")) {
-                    RatingsView(rating: $submitBookVM.rating)
+                    RatingsView(rating: $bookVM.rating)
                 }
                 Section(header: Text("Date")) {
-                    DatePicker("Start Date", selection: $submitBookVM.start, displayedComponents: .date)
-                    DatePicker("Ends Date", selection: $submitBookVM.end, displayedComponents: .date)
+                    DatePicker("Start Date", selection: $bookVM.start, displayedComponents: .date)
+                    DatePicker("Ends Date", selection: $bookVM.end, displayedComponents: .date)
                 }
-                Section(header: Text("Book reviews")) {
-                    MultilineTextField(text: $submitBookVM.reviews, isNavigationBarHidden: self.$isNavigationBarHidden)
+                Section(header: Text("Book review")) {
+                    MultilineTextField(text: $bookVM.review, isNavigationBarHidden: self.$isNavigationBarHidden)
                         .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
                         .onTapGesture {
                             self.isNavigationBarHidden = true
@@ -50,10 +50,10 @@ struct SubmitBookView: View {
                 }, trailing:
                 Button(action: {
                     //　firebaseに追加
-                    self.submitBookVM.submitBook()
+                    self.bookVM.submitBook()
                     self.presentatinoMode.wrappedValue.dismiss()
                 }) {
-                    if submitBookVM.isValidated {
+                    if bookVM.isValidated {
                         Text("Done")
                     }
                 }
@@ -65,84 +65,5 @@ struct SubmitBookView: View {
 struct SubmitBookView_Previews: PreviewProvider {
     static var previews: some View {
         SubmitBookView()
-    }
-}
-
-struct MultilineTextField: UIViewRepresentable {
-
-    @Binding var text: String
-    @Binding var isNavigationBarHidden: Bool
-
-    func makeUIView(context: Context) -> UITextView {
-        let view = UITextView()
-        view.delegate = context.coordinator
-        view.isScrollEnabled = true
-        view.isEditable = true
-        view.isUserInteractionEnabled = true
-        view.font = UIFont.systemFont(ofSize: 16)
-        return view
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        if uiView.text != text {
-            uiView.text = text
-        }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        var parent: MultilineTextField
-
-        init(_ textView: MultilineTextField) {
-            self.parent = textView
-        }
-
-        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            return true
-        }
-
-        func textViewDidChange(_ textView: UITextView) {
-            self.parent.text = textView.text
-        }
-
-        func textViewDidEndEditing(_ textView: UITextView) {
-            self.parent.isNavigationBarHidden = false
-        }
-
-    }
-
-}
-
-struct RatingsView: View {
-
-    @Binding var rating: Int
-
-    var body: some View {
-        HStack(spacing: 12, content: {
-            Text("Rating")
-            Spacer()
-            ForEach(0..<5) { i in
-                Image(systemName: "star.fill")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(self.rating - 1 >= i ? .yellow : .gray)
-                    .onTapGesture {
-                        self.rating = i + 1
-                }
-            }
-        })
-    }
-}
-
-struct SectionHeader: View {
-    let text: String
-    var body: some View {
-        Text(text)
-            .padding()
-            .frame(width: UIScreen.main.bounds.width, height: 28,alignment: .leading)
-            .foregroundColor(Color.red)
     }
 }
