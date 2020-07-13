@@ -22,6 +22,7 @@ struct SpineView: View {
             """)
             .frame(width: 35, height: 120)
             .border(Color.blue, width: 1)
+            .background(Color.red)
     }
 }
 
