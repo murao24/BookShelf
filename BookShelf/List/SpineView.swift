@@ -20,8 +20,8 @@ struct SpineView: View {
             \(title)
             \(author)
             """)
-            .frame(width: 35, height: 120)
-            .border(Color.blue, width: 2)
+            .frame(width: 30, height: 120)
+            .border(Color.blue, width: 3)
             .cornerRadius(5)
     }
 }
@@ -62,11 +62,11 @@ public class TategakiTextView: UIView {
             return
         }
         context.scaleBy(x: 1, y: -1)
-        context.translateBy(x: 2.5 , y: -rect.height - 1)
+        context.translateBy(x: -2, y: -rect.height-5)
 
         let baseAttributes: [NSAttributedString.Key : Any] = [
             .verticalGlyphForm: true,
-            .font: UIFont.systemFont(ofSize: 11),
+            .font: UIFont.systemFont(ofSize: 15),
             .foregroundColor: UIColor.label
         ]
         let attributedText = NSMutableAttributedString(string: text ?? "", attributes: baseAttributes)

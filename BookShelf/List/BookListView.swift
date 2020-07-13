@@ -19,9 +19,9 @@ struct BookListView: View {
         NavigationView {
             QGrid(
                 bookListVM.bookCellViewModels,
-                columns: 8,
+                columns: 10,
                 vSpacing: 20,
-                hSpacing: 8,
+                hSpacing: 2,
                 vPadding: 20,
                 hPadding: 20
             ) { bookCellVM in
