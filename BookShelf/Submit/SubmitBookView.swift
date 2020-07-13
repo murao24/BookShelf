@@ -16,7 +16,6 @@ struct SubmitBookView: View {
 
     @State var isNavigationBarHidden = false
 
-
     var body: some View {
         NavigationView {
             VStack {
@@ -43,7 +42,7 @@ struct SubmitBookView: View {
                         }
                     }
                 }
-                .navigationBarTitle("Submit a book")
+                .navigationBarTitle("Submit a book", displayMode: .automatic)
                 .navigationBarHidden(isNavigationBarHidden)
                 .navigationBarItems(
                     leading:
@@ -71,3 +70,5 @@ struct SubmitBookView_Previews: PreviewProvider {
         SubmitBookView()
     }
 }
+
+

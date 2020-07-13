@@ -16,6 +16,7 @@ struct EditBookView: View {
     @ObservedObject var bookVM = BookViewModel()
     @State var isNavigationBarHidden = false
 
+
     var body: some View {
         VStack {
             if bookVM.errorMessage != "" {
@@ -36,7 +37,7 @@ struct EditBookView: View {
                     DatePicker("Ends Date", selection: $bookVM.end, displayedComponents: .date)
                 }
                 Section(header: Text("review")) {
-                    MultilineTextField(text: $bookCellVM.book.review, isNavigationBarHidden: $isNavigationBarHidden)
+                    MultilineTextField(text: $bookCellVM.book.review, isNavigationBarHidden: self.$isNavigationBarHidden)
                         .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
                         .onTapGesture {
                             self.isNavigationBarHidden = true
@@ -51,7 +52,7 @@ struct EditBookView: View {
                 self.bookVM.end = self.bookCellVM.book.end
                 self.bookVM.review = self.bookCellVM.book.review
             }
-            .navigationBarBackButtonHidden(isNavigationBarHidden)
+            .navigationBarTitle("Edit a book", displayMode: .inline)
             .navigationBarItems(
                 trailing:
                 Button(action: {

@@ -22,7 +22,6 @@ class BookViewModel: ObservableObject {
     @Published var review: String = ""
     @Published var isValidated: Bool = false
     @Published var errorMessage: String = ""
-    @Published var errorPoint: String = ""
 
     enum ErrorMessage: String {
         case title = "Please enter the title."
@@ -38,19 +37,15 @@ class BookViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .map { (title, author, start, end) in
                 if title == "" {
-                    self.errorPoint = "title"
                     self.errorMessage = ErrorMessage.title.rawValue
                     return false
                 } else if author == "" {
-                    self.errorPoint = "author"
                     self.errorMessage = ErrorMessage.author.rawValue
                     return false
                 } else if start > end {
-                    self.errorPoint = "date"
                     self.errorMessage = ErrorMessage.date.rawValue
                     return false
                 } else {
-                    self.errorPoint = ""
                     self.errorMessage = ""
                     return true
                 }
