@@ -19,45 +19,49 @@ struct SubmitBookView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: SectionHeader(text: "Book information(required)")) {
-                    TextField("Title", text: $bookVM.title)
-                    TextField("Author", text: $bookVM.author)
-                }
-                Section(header: Text("Rating")) {
-                    RatingsView(rating: $bookVM.rating)
-                }
-                Section(header: Text("Date")) {
-                    DatePicker("Start Date", selection: $bookVM.start, displayedComponents: .date)
-                    DatePicker("Ends Date", selection: $bookVM.end, displayedComponents: .date)
-                }
-                Section(header: Text("Book review")) {
-                    MultilineTextField(text: $bookVM.review, isNavigationBarHidden: self.$isNavigationBarHidden)
-                        .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
-                        .onTapGesture {
-                            self.isNavigationBarHidden = true
+            VStack {
+                Text(bookVM.errorMessage)
+                    .foregroundColor(.red)
+                    .font(.caption)
+                Form {
+                    Section(header: SectionHeader(text: "Book information(required)")) {
+                        TextField("Title", text: $bookVM.title)
+                        TextField("Author", text: $bookVM.author)
+                    }
+                    Section(header: Text("Rating")) {
+                        RatingsView(rating: $bookVM.rating)
+                    }
+                    Section(header: Text("Date")) {
+                        DatePicker("Start Date", selection: $bookVM.start, displayedComponents: .date)
+                        DatePicker("Ends Date", selection: $bookVM.end, displayedComponents: .date)
+                    }
+                    Section(header: Text("Book review")) {
+                        MultilineTextField(text: $bookVM.review, isNavigationBarHidden: self.$isNavigationBarHidden)
+                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
+                            .onTapGesture {
+                                self.isNavigationBarHidden = true
+                        }
                     }
                 }
-            }
-            .navigationBarTitle("Submit a book")
-            .navigationBarHidden(isNavigationBarHidden)
-            .navigationBarItems(
-                leading:
-                Button(action: {
-                    self.presentatinoMode.wrappedValue.dismiss()
-                }) {
-                    Text("Cancel")
-                }, trailing:
-                Button(action: {
-                    //　firebaseに追加
-                    self.bookVM.submitBook()
-                    self.presentatinoMode.wrappedValue.dismiss()
-                }) {
-                    if bookVM.isValidated {
+                .navigationBarTitle("Submit a book")
+                .navigationBarHidden(isNavigationBarHidden)
+                .navigationBarItems(
+                    leading:
+                    Button(action: {
+                        self.presentatinoMode.wrappedValue.dismiss()
+                    }) {
+                        Text("Cancel")
+                    }, trailing:
+                    Button(action: {
+                        //　firebaseに追加
+                        self.bookVM.submitBook()
+                        self.presentatinoMode.wrappedValue.dismiss()
+                    }) {
                         Text("Done")
                     }
-                }
-            )
+                    .disabled(!bookVM.isValidated)
+                )
+            }
         }
     }
 }

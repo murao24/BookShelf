@@ -17,45 +17,52 @@ struct EditBookView: View {
     @State var isNavigationBarHidden = false
 
     var body: some View {
-        Form {
-            Section(header: Text("book infomation")) {
-                TextField(bookCellVM.book.title, text: $bookVM.title)
-                TextField(bookCellVM.book.author, text: $bookVM.author)
+        VStack {
+            if bookVM.errorMessage != "" {
+                Text(bookVM.errorMessage)
+                    .foregroundColor(.red)
+                    .font(.caption)
             }
-            Section(header: Text("rating")) {
-                RatingsView(rating: $bookVM.rating)
-            }
-            Section(header: Text("Date")) {
-                DatePicker("Start Date", selection: $bookVM.start, displayedComponents: .date)
-                DatePicker("Ends Date", selection: $bookVM.end, displayedComponents: .date)
-            }
-            Section(header: Text("review")) {
-                MultilineTextField(text: $bookCellVM.book.review, isNavigationBarHidden: $isNavigationBarHidden)
-                    .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
-                    .onTapGesture {
-                        self.isNavigationBarHidden = true
+            Form {
+                Section(header: Text("book infomation")) {
+                    TextField(bookCellVM.book.title, text: $bookVM.title)
+                    TextField(bookCellVM.book.author, text: $bookVM.author)
+                }
+                Section(header: Text("rating")) {
+                    RatingsView(rating: $bookVM.rating)
+                }
+                Section(header: Text("Date")) {
+                    DatePicker("Start Date", selection: $bookVM.start, displayedComponents: .date)
+                    DatePicker("Ends Date", selection: $bookVM.end, displayedComponents: .date)
+                }
+                Section(header: Text("review")) {
+                    MultilineTextField(text: $bookCellVM.book.review, isNavigationBarHidden: $isNavigationBarHidden)
+                        .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)
+                        .onTapGesture {
+                            self.isNavigationBarHidden = true
+                    }
                 }
             }
-        }
-        .onAppear {
-            self.bookVM.title = self.bookCellVM.book.title
-            self.bookVM.author = self.bookCellVM.book.author
-            self.bookVM.rating = self.bookCellVM.book.rating
-            self.bookVM.start = self.bookCellVM.book.start
-            self.bookVM.end = self.bookCellVM.book.end
-            self.bookVM.review = self.bookCellVM.book.review
-        }
-        .navigationBarBackButtonHidden(isNavigationBarHidden)
-        .navigationBarItems(trailing:
-            Button(action: {
-                self.bookVM.updateBook(self.bookCellVM.book.id)
-                self.presentatinoMode.wrappedValue.dismiss()
-            }) {
-                if self.bookVM.isValidated {
+            .onAppear {
+                self.bookVM.title = self.bookCellVM.book.title
+                self.bookVM.author = self.bookCellVM.book.author
+                self.bookVM.rating = self.bookCellVM.book.rating
+                self.bookVM.start = self.bookCellVM.book.start
+                self.bookVM.end = self.bookCellVM.book.end
+                self.bookVM.review = self.bookCellVM.book.review
+            }
+            .navigationBarBackButtonHidden(isNavigationBarHidden)
+            .navigationBarItems(
+                trailing:
+                Button(action: {
+                    self.bookVM.updateBook(self.bookCellVM.book.id)
+                    self.presentatinoMode.wrappedValue.dismiss()
+                }) {
                     Text("Update")
                 }
-            }
-        )
+                .disabled(!bookVM.isValidated)
+            )
+        }
     }
 }
 

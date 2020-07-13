@@ -11,11 +11,13 @@ import SwiftUI
 
 struct SectionHeader: View {
     let text: String
+    let color: Color = .red
+
     var body: some View {
         Text(text)
             .padding()
             .frame(width: UIScreen.main.bounds.width, height: 28,alignment: .leading)
-            .foregroundColor(Color.red)
+            .foregroundColor(color)
     }
 }
 
