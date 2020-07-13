@@ -20,7 +20,7 @@ struct BookListView: View {
             QGrid(
                 bookListVM.bookCellViewModels,
                 columns: 10,
-                vSpacing: 20,
+                vSpacing: 10,
                 hSpacing: 2,
                 vPadding: 20,
                 hPadding: 20
