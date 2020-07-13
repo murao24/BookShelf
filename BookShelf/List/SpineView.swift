@@ -21,7 +21,8 @@ struct SpineView: View {
             \(author)
             """)
             .frame(width: 35, height: 120)
-            .border(Color.blue, width: 1)
+            .border(Color.blue, width: 2)
+            .cornerRadius(5)
     }
 }
 
@@ -61,7 +62,7 @@ public class TategakiTextView: UIView {
             return
         }
         context.scaleBy(x: 1, y: -1)
-        context.translateBy(x: 1.5 , y: -rect.height - 1)
+        context.translateBy(x: 2.5 , y: -rect.height - 1)
 
         let baseAttributes: [NSAttributedString.Key : Any] = [
             .verticalGlyphForm: true,
