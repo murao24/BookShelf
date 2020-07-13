@@ -10,7 +10,7 @@ import SwiftUI
 import CoreText
 import UIKit
 
-struct SpineVIew: View {
+struct SpineView: View {
 
     let title: String
     let author: String
@@ -27,7 +27,7 @@ struct SpineVIew: View {
 
 struct SpineVIew_Previews: PreviewProvider {
     static var previews: some View {
-        SpineVIew(title: "ホワイトラビット", author: "伊坂幸太郎")
+        SpineView(title: "ホワイトラビット", author: "伊坂幸太郎")
             .previewLayout(.fixed(width: 35, height: 120))
     }
 }
