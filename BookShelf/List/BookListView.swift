@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import QGrid
 
 struct BookListView: View {
 
@@ -16,14 +17,16 @@ struct BookListView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(bookListVM.bookCellViewModels) { bookCellVM in
-                    NavigationLink(destination: EditBookView(bookCellVM: bookCellVM)) {
-                        BookCell(bookCellVM: bookCellVM)
-                    }
-                }
-                .onDelete { (indexSet) in
-                    self.bookListVM.deleteBook(indexSet)
+            QGrid(
+                bookListVM.bookCellViewModels,
+                columns: 8,
+                vSpacing: 20,
+                hSpacing: 8,
+                vPadding: 20,
+                hPadding: 20
+            ) { bookCellVM in
+                NavigationLink(destination: EditBookView(bookCellVM: bookCellVM)) {
+                    BookCell(bookCellVM: bookCellVM)
                 }
             }
             .sheet(isPresented: self.$isActionSheet) {
@@ -54,9 +57,7 @@ struct BookCell: View {
 
     var body: some View {
         HStack {
-            Text(bookCellVM.book.title)
-            Spacer()
-            Text(bookCellVM.book.author)
+            SpineView(title: bookCellVM.book.title, author: bookCellVM.book.author)
         }
     }
 }
