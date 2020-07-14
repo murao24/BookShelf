@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,6 @@
 		0463CA9824B45BA800D82024 /* SearchedBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463CA9724B45BA800D82024 /* SearchedBook.swift */; };
 		0486466C24BADFF200A7C07E /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486466B24BADFF200A7C07E /* BookViewModel.swift */; };
 		04C1A67824BC2C0B00E60663 /* SpineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1A67724BC2C0B00E60663 /* SpineView.swift */; };
-		04C3FA9124BC468400ABE1F3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 04C3FA9024BC468400ABE1F3 /* SwiftPackageProductDependency */; };
 		04CC7B3324B40943009B1920 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04CC7B3224B40943009B1920 /* GoogleService-Info.plist */; };
 		04CC7B3624B40987009B1920 /* BookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC7B3524B40987009B1920 /* BookRepository.swift */; };
 		04CC7B3824B44225009B1920 /* SearchBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC7B3724B44225009B1920 /* SearchBookView.swift */; };
@@ -72,7 +71,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C3FA9124BC468400ABE1F3 /* BuildFile in Frameworks */,
 				268F6653F97F23EA2292E832 /* Pods_BookShelf.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,7 +220,6 @@
 			);
 			name = BookShelf;
 			packageProductDependencies = (
-				04C3FA9024BC468400ABE1F3 /* SwiftPackageProductDependency */,
 			);
 			productName = BookShelf;
 			productReference = 04E1F2FC24B1A0A800D0F2D6 /* BookShelf.app */;
@@ -253,7 +250,6 @@
 			);
 			mainGroup = 04E1F2F324B1A0A800D0F2D6;
 			packageReferences = (
-				04C3FA8F24BC468400ABE1F3 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 04E1F2FD24B1A0A800D0F2D6 /* Products */;
 			projectDirPath = "";
@@ -542,25 +538,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		04C3FA8F24BC468400ABE1F3 /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Q-Mobile/QGrid.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.4;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		04C3FA9024BC468400ABE1F3 /* SwiftPackageProductDependency */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 04C3FA8F24BC468400ABE1F3 /* RemoteSwiftPackageReference */;
-			productName = QGrid;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04E1F2F424B1A0A800D0F2D6 /* Project object */;
 }

@@ -20,28 +20,12 @@ struct BookListView: View {
     var body: some View {
         NavigationView {
             ZStack {
-//                QGrid(
-//                    bookListVM.bookCellViewModels,
-//                    columns: 10,
-//                    vSpacing: 30,
-//                    hSpacing: 2,
-//                    vPadding: 20,
-//                    hPadding: 20
-//                ) { bookCellVM in
-//                    NavigationLink(destination: EditBookView(bookCellVM: bookCellVM)) {
-//                        SpineView(bookCellVM: bookCellVM)
-//                    }
-//                }
-//                List {
-//                    ForEach(self.bookListVM.bookCellViewModels) { bookCellVM in
-//                        BookCell(bookCellVM: bookCellVM)
-//                    }
-//                }
                 WaterfallGrid(self.bookListVM.bookCellViewModels) { bookCellVM in
                     SpineView(bookCellVM: bookCellVM)
                 }
-                .gridStyle(columns: 10, animation: .none)
-//                .border(Color.secondary, width: 10)
+                .gridStyle(columns: 10, spacing: 5, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut)
+                .scrollOptions(showsIndicators: true)
+                .border(Color.secondary, width: 10)
                 .sheet(isPresented: self.$isActionSheet) {
                     SubmitBookView()
                 }
@@ -81,19 +65,6 @@ struct ContentView_Previews: PreviewProvider {
                 .environment(\.colorScheme, .light)
             BookListView()
                 .environment(\.colorScheme, .dark)
-        }
-    }
-}
-
-
-struct BookCell: View {
-    @ObservedObject var bookCellVM: BookCellViewModel
-
-    var body: some View {
-        HStack {
-            Text(bookCellVM.book.title)
-            Spacer()
-            Text(bookCellVM.book.author)
         }
     }
 }
