@@ -20,7 +20,7 @@ struct BookListView: View {
             QGrid(
                 bookListVM.bookCellViewModels,
                 columns: 10,
-                vSpacing: 10,
+                vSpacing: 30,
                 hSpacing: 2,
                 vPadding: 20,
                 hPadding: 20
@@ -29,11 +29,19 @@ struct BookListView: View {
                     SpineView(bookCellVM: bookCellVM)
                 }
             }
+            .border(Color.secondary, width: 10)
             .sheet(isPresented: self.$isActionSheet) {
                 SubmitBookView()
             }
             .navigationBarTitle("BookShelf")
-            .navigationBarItems(trailing:
+            .navigationBarItems(
+                leading:
+                Button(action: {
+
+                }) {
+                    Image(systemName: "arrow.up.arrow.down")
+                },
+                trailing:
                 Button(action: { self.isActionSheet.toggle() }) {
                     Image(systemName: "plus")
                         .resizable()
@@ -46,7 +54,12 @@ struct BookListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        BookListView()
+        Group {
+            BookListView()
+                .environment(\.colorScheme, .light)
+            BookListView()
+                .environment(\.colorScheme, .dark)
+        }
     }
 }
 

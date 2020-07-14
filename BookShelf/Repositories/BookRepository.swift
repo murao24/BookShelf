@@ -15,52 +15,17 @@ class BookRepository: ObservableObject {
     
     let db = Firestore.firestore()
     
-//    @Published var books = [Book]()
-    @Published var books = [
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
-        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date())
-    ]
+    @Published var books = [Book]()
+
     
     init() {
-//        loadData()
+        loadData()
     }
     
     func loadData() {
         
         let userId = Auth.auth().currentUser?.uid
-        
+
         db.collection("books")
             .order(by: "createdTime", descending: true)
             .whereField("userId", isEqualTo: userId!)
