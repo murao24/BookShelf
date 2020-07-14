@@ -14,6 +14,7 @@ struct EditBookView: View {
 
     @ObservedObject var bookCellVM: BookCellViewModel
     @ObservedObject var bookVM = BookViewModel()
+    @ObservedObject var bookListVM = BookListViewModel()
     @State var isNavigationBarHidden = false
 
 
@@ -24,7 +25,7 @@ struct EditBookView: View {
                     .foregroundColor(.red)
                     .font(.caption)
             }
-            Form {
+            Form() {
                 Section(header: Text("book infomation")) {
                     TextField(bookCellVM.book.title, text: $bookVM.title)
                     TextField(bookCellVM.book.author, text: $bookVM.author)
@@ -42,6 +43,17 @@ struct EditBookView: View {
                         .onTapGesture {
                             self.isNavigationBarHidden = true
                     }
+                }
+                Button(action: {
+                    self.bookListVM.deleteBook(self.bookCellVM.id)
+                    self.presentatinoMode.wrappedValue.dismiss()
+                }) {
+                    Text("Delete")
+                        .foregroundColor(.red)
+                        .fontWeight(.bold)
+                        .frame(alignment: .center)
+                        .padding()
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 30, alignment: .center)
                 }
             }
             .onAppear {

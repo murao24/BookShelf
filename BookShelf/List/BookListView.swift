@@ -40,7 +40,7 @@ struct BookListView: View {
                 .navigationBarItems(
                     leading:
                     Button(action: {
-                        self.isShowPopup.toggle()
+                        
                     }) {
                         Image(systemName: "arrow.up.arrow.down")
                     },
@@ -52,12 +52,16 @@ struct BookListView: View {
                     }
                 )
             }
-            .popup(isPresented: $isShowPopup, autohideIn: 2) {
-                Text("Pop UP!")
+            .popup(isPresented: $isShowPopup, animation: .easeOut, autohideIn: 2, closeOnTap: true) {
+                HStack() {
+                    Text("Book successfully added to your shelf!")
+                }
+                .frame(width: 350, height: 50)
+                .background(Color(red: 0.85, green: 0.8, blue: 0.95))
+                .cornerRadius(30.0)
+                .position(x: UIScreen.main.bounds.width / 2, y: 60)
             }
-        .frame(width: 200, height: 50)
-        .background(Color(red: 0.85, green: 0.8, blue: 0.95))
-        .cornerRadius(30.0)
+
         }
     }
 }
