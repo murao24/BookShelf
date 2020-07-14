@@ -13,8 +13,9 @@ struct SubmitBookView: View {
     @ObservedObject var bookVM = BookViewModel()
 
     @Environment(\.presentationMode) var presentatinoMode
-
     @State var isNavigationBarHidden = false
+    @Binding var isPopup: Bool
+    @Binding var popupMessage: String
 
     var body: some View {
         NavigationView {
@@ -54,6 +55,8 @@ struct SubmitBookView: View {
                     Button(action: {
                         //　firebaseに追加
                         self.bookVM.submitBook()
+                        self.isPopup.toggle()
+                        self.popupMessage = "Book successfully added to your shelf!"
                         self.presentatinoMode.wrappedValue.dismiss()
                     }) {
                         Text("Done")
@@ -65,10 +68,10 @@ struct SubmitBookView: View {
     }
 }
 
-struct SubmitBookView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubmitBookView()
-    }
-}
+//struct SubmitBookView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubmitBookView(isPopup: )
+//    }
+//}
 
 

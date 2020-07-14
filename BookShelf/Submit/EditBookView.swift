@@ -17,7 +17,8 @@ struct EditBookView: View {
     @ObservedObject var bookListVM = BookListViewModel()
     @State var isNavigationBarHidden = false
     @State var isAlertShown = false
-
+    @Binding var isPopup: Bool
+    @Binding var popupMessage: String
 
     var body: some View {
         VStack {
@@ -71,6 +72,8 @@ struct EditBookView: View {
                     primaryButton: .cancel(Text("Cancel")),
                     secondaryButton: .destructive(Text("Delete"), action: {
                         self.bookListVM.deleteBook(self.bookCellVM.id)
+                        self.isPopup.toggle()
+                        self.popupMessage = "Book successfully deleted from your shelf!"
                         self.presentatinoMode.wrappedValue.dismiss()
                     })
                 )
@@ -80,6 +83,8 @@ struct EditBookView: View {
                 trailing:
                 Button(action: {
                     self.bookVM.updateBook(self.bookCellVM.book.id)
+                    self.isPopup.toggle()
+                    self.popupMessage = "Book successfully updated!"
                     self.presentatinoMode.wrappedValue.dismiss()
                 }) {
                     Text("Update")
@@ -90,8 +95,8 @@ struct EditBookView: View {
     }
 }
 
-struct BookDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditBookView(bookCellVM: BookCellViewModel(book: Book(title: "String", author: "", rating: 4, review: "", start: Date(), end: Date())))
-    }
-}
+//struct BookDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditBookView(bookCellVM: BookCellViewModel(book: Book(title: "String", author: "", rating: 4, review: "", start: Date(), end: Date())))
+//    }
+//}

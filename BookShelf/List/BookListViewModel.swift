@@ -24,7 +24,6 @@ class BookListViewModel: ObservableObject {
         }
         .assign(to: \.bookCellViewModels, on: self)
         .store(in: &cancellables)
-        
     }
 
     func deleteBook(_ bookID: String?) {
