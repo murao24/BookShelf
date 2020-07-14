@@ -14,4 +14,5 @@ target 'BookShelf' do
   pod 'SDWebImageSwiftUI'
   pod 'IQKeyboardManagerSwift'
   pod 'ExytePopupView'
+  pod 'WaterfallGrid', '~> 0.4.0'
 end

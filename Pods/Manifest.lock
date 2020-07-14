@@ -342,6 +342,7 @@ PODS:
   - SDWebImageSwiftUI (1.5.0):
     - SDWebImage (~> 5.7)
   - SwiftyJSON (5.0.0)
+  - WaterfallGrid (0.4.0)
 
 DEPENDENCIES:
   - ExytePopupView
@@ -352,6 +353,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - SDWebImageSwiftUI
   - SwiftyJSON
+  - WaterfallGrid (~> 0.4.0)
 
 SPEC REPOS:
   trunk:
@@ -380,6 +382,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageSwiftUI
     - SwiftyJSON
+    - WaterfallGrid
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -407,7 +410,8 @@ SPEC CHECKSUMS:
   SDWebImage: 112503ec94a5a2a41869503844a15e8d8f1ead5c
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  WaterfallGrid: 568881d69470c0ffe635732dfafd859db1365989
 
-PODFILE CHECKSUM: 74ba8f80f75771dfccefc111b50b44039623821a
+PODFILE CHECKSUM: c8ff099763769cd2468e2edf94ca13f8dba2afaf
 
 COCOAPODS: 1.9.3

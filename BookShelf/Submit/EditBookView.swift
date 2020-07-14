@@ -16,6 +16,7 @@ struct EditBookView: View {
     @ObservedObject var bookVM = BookViewModel()
     @ObservedObject var bookListVM = BookListViewModel()
     @State var isNavigationBarHidden = false
+    @State var isAlertShown = false
 
 
     var body: some View {
@@ -45,8 +46,7 @@ struct EditBookView: View {
                     }
                 }
                 Button(action: {
-                    self.bookListVM.deleteBook(self.bookCellVM.id)
-                    self.presentatinoMode.wrappedValue.dismiss()
+                    self.isAlertShown.toggle()
                 }) {
                     Text("Delete")
                         .foregroundColor(.red)
@@ -63,6 +63,17 @@ struct EditBookView: View {
                 self.bookVM.start = self.bookCellVM.book.start
                 self.bookVM.end = self.bookCellVM.book.end
                 self.bookVM.review = self.bookCellVM.book.review
+            }
+            .alert(isPresented: $isAlertShown) {
+                Alert(
+                    title: Text("Are you sure you want to delete it?"),
+                    message: Text(""),
+                    primaryButton: .cancel(Text("Cancel")),
+                    secondaryButton: .destructive(Text("Delete"), action: {
+                        self.bookListVM.deleteBook(self.bookCellVM.id)
+                        self.presentatinoMode.wrappedValue.dismiss()
+                    })
+                )
             }
             .navigationBarTitle("Edit a book", displayMode: .inline)
             .navigationBarItems(
