@@ -18,7 +18,6 @@ struct SpineView: View {
     var body: some View {
         TategakiText(text: """
             \(title)
-            \(author)
             """)
             .frame(width: 30, height: 120)
             .border(Color.blue, width: 2)
