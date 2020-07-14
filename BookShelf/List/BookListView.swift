@@ -15,7 +15,7 @@ struct BookListView: View {
     @ObservedObject var bookListVM = BookListViewModel()
     
     @State var isActionSheet: Bool = false
-    @State var isShowPopup: Bool = false
+    @State var isShowPopup: Bool = true
     
     var body: some View {
         NavigationView {
@@ -40,7 +40,7 @@ struct BookListView: View {
                 .navigationBarItems(
                     leading:
                     Button(action: {
-                        
+
                     }) {
                         Image(systemName: "arrow.up.arrow.down")
                     },
@@ -59,7 +59,6 @@ struct BookListView: View {
                 .frame(width: 350, height: 50)
                 .background(Color(red: 0.85, green: 0.8, blue: 0.95))
                 .cornerRadius(30.0)
-                .position(x: UIScreen.main.bounds.width / 2, y: 60)
             }
 
         }
