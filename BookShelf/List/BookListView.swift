@@ -10,11 +10,12 @@ import SwiftUI
 import QGrid
 
 struct BookListView: View {
-
+    
     @ObservedObject var bookListVM = BookListViewModel()
-
+    
     @State var isActionSheet: Bool = false
-
+    @State var isShowPopup: Bool = false
+    
     var body: some View {
         NavigationView {
             QGrid(
@@ -37,7 +38,7 @@ struct BookListView: View {
             .navigationBarItems(
                 leading:
                 Button(action: {
-
+                    
                 }) {
                     Image(systemName: "arrow.up.arrow.down")
                 },
