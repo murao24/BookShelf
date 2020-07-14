@@ -15,10 +15,46 @@ class BookRepository: ObservableObject {
     
     let db = Firestore.firestore()
     
-    @Published var books = [Book]()
+//    @Published var books = [Book]()
+    @Published var books = [
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date()),
+        Book(title: "ホワイトラビット", author: "伊坂幸太郎", rating: 4, review: "", start: Date(), end: Date())
+    ]
     
     init() {
-        loadData()
+//        loadData()
     }
     
     func loadData() {

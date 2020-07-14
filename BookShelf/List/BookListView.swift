@@ -26,7 +26,7 @@ struct BookListView: View {
                 hPadding: 20
             ) { bookCellVM in
                 NavigationLink(destination: EditBookView(bookCellVM: bookCellVM)) {
-                    BookCell(bookCellVM: bookCellVM)
+                    SpineView(bookCellVM: bookCellVM)
                 }
             }
             .sheet(isPresented: self.$isActionSheet) {
@@ -49,17 +49,4 @@ struct ContentView_Previews: PreviewProvider {
         BookListView()
     }
 }
-
-
-struct BookCell: View {
-
-    @ObservedObject var bookCellVM: BookCellViewModel
-
-    var body: some View {
-        HStack {
-            SpineView(title: bookCellVM.book.title, author: bookCellVM.book.author)
-        }
-    }
-}
-
 

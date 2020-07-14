@@ -12,23 +12,24 @@ import UIKit
 
 struct SpineView: View {
 
-    let title: String
-    let author: String
+    @ObservedObject var bookCellVM: BookCellViewModel
 
     var body: some View {
         TategakiText(text: """
-            \(title)
+            \(bookCellVM.book.title)
             """
             )
             .frame(width: 30, height: 120)
-            .border(Color.blue, width: 2)
+            .border(Color.orange, width: 2)
+            .background(Color.orange)
+            .shadow(radius: 5)
             .cornerRadius(5)
     }
 }
 
 struct SpineVIew_Previews: PreviewProvider {
     static var previews: some View {
-        SpineView(title: "ホワイトラビット", author: "伊坂幸太郎")
+        SpineView(bookCellVM: BookCellViewModel(book: Book(title: "", author: "", rating: 4, review: "", start: Date(), end: Date())))
             .previewLayout(.fixed(width: 35, height: 120))
     }
 }
@@ -66,7 +67,7 @@ public class TategakiTextView: UIView {
 
         let baseAttributes: [NSAttributedString.Key : Any] = [
             .verticalGlyphForm: true,
-            .font: UIFont.systemFont(ofSize: 15),
+            .font: UIFont.italicSystemFont(ofSize: 15),
             .foregroundColor: UIColor.label
         ]
         let attributedText = NSMutableAttributedString(string: text ?? "", attributes: baseAttributes)
