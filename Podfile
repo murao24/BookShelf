@@ -13,4 +13,5 @@ target 'BookShelf' do
   pod 'SwiftyJSON'
   pod 'SDWebImageSwiftUI'
   pod 'IQKeyboardManagerSwift'
+  pod 'ExytePopupView'
 end
