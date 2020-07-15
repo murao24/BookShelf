@@ -15,4 +15,6 @@ target 'BookShelf' do
   pod 'IQKeyboardManagerSwift'
   pod 'ExytePopupView'
   pod 'WaterfallGrid', '~> 0.4.0'
+  pod "Popover"
+
 end
