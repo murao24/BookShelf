@@ -20,15 +20,15 @@ class BookRepository: ObservableObject {
     @Published var descending: Bool = true
     
     init() {
-        loadData(sortedName: sortedName, descending: descending)
+        loadData()
     }
     
-    func loadData(sortedName: String, descending: Bool) {
+    func loadData() {
         
         let userId = Auth.auth().currentUser?.uid
 
         db.collection("books")
-            .order(by: sortedName, descending: descending)
+            .order(by: sortedName, descending: true)
             .whereField("userId", isEqualTo: userId!)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {

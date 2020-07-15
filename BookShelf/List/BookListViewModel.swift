@@ -32,8 +32,9 @@ class BookListViewModel: ObservableObject {
         }
     }
 
-    func sortBook(sortedName: String, descending: Bool = true) {
-        bookRepository.loadData(sortedName: sortedName, descending: descending)
+    func sortBook(sortedName: String) {
+        bookRepository.sortedName = sortedName
+        bookRepository.loadData()
     }
 
 }

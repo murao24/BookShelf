@@ -14,10 +14,10 @@ struct BookListView: View {
     
     @ObservedObject var bookListVM = BookListViewModel()
     
-    @State var isActionSheet: Bool = false
+    @State var isSheet: Bool = false
     @State var isPopup: Bool = false
+    @State var isActionSheet: Bool = false
     @State var popupMessage: String = ""
-    @State var isSortPopup: Bool = false
 
     var body: some View {
         NavigationView {
@@ -27,58 +27,37 @@ struct BookListView: View {
                         SpineView(bookCellVM: bookCellVM)
                     }
                 }
-                .gridStyle(columns: 10, spacing: 5, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut)
+                .gridStyle(columns: 10, spacing: 25, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut(duration: 0.5))
                 .scrollOptions(showsIndicators: true)
-                .border(Color.secondary, width: 10)
-                .sheet(isPresented: self.$isActionSheet) {
+                .border(Color.secondary, width: 8)
+                .actionSheet(isPresented: $isActionSheet) {
+                    ActionSheet(title: Text(""), buttons:[
+                        .default(Text("Default(Date Created)"), action: {self.bookListVM.sortBook(sortedName: "createdTime")}),
+                        .default(Text("Author"), action: {self.bookListVM.sortBook(sortedName: "author")}),
+                        .default(Text("Title"), action: {self.bookListVM.sortBook(sortedName: "title")}),
+                        .cancel(Text("Cancel"))
+                    ])
+                }
+                .sheet(isPresented: self.$isSheet) {
                     SubmitBookView(isPopup: self.$isPopup, popupMessage: self.$popupMessage)
                 }
                 .navigationBarTitle("BookShelf")
                 .navigationBarItems(
                     leading:
                     Button(action: {
-                        self.isSortPopup.toggle()
+                        self.isActionSheet.toggle()
                     }) {
                         Image(systemName: "arrow.up.arrow.down")
+                            .resizable()
+                            .frame(width: 20, height: 20)
                     },
                     trailing:
-                    Button(action: { self.isActionSheet.toggle() }) {
+                    Button(action: { self.isSheet.toggle() }) {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 20, height: 20)
                     }
                 )
-            }
-            .popup(isPresented: $isSortPopup, type: .toast, position: .top, animation: .default, closeOnTap: false, closeOnTapOutside: true) {
-                HStack() {
-                    Spacer()
-                    Button(action: {
-                        self.bookListVM.sortBook(sortedName: "author", descending: false)
-                        self.isSortPopup.toggle()
-                    }) { Text("author").padding(3)}
-                        .background(Color.accentColor)
-                        .cornerRadius(5)
-                    Spacer()
-                    Button(action: {
-                        self.bookListVM.sortBook(sortedName: "title", descending: false)
-                        self.isSortPopup.toggle()
-                    }) { Text("title").padding(3)}
-                        .background(Color.accentColor)
-                        .cornerRadius(5)
-                    Spacer()
-                    Button(action: {
-                        self.bookListVM.sortBook(sortedName: "createdTime")
-                        self.isSortPopup.toggle()
-                    }) { Text("date").padding(3)}
-                        .background(Color.accentColor)
-                        .cornerRadius(5)
-                    Spacer()
-                }
-                .foregroundColor(Color.primary)
-                .frame(width: 350, height: 50)
-                .background(Color.primary)
-                .cornerRadius(30)
-                .position(x: UIScreen.main.bounds.width / 2, y: 180)
             }
             .popup(isPresented: $isPopup, animation: .easeOut, autohideIn: 2, closeOnTap: true) {
                 HStack() {
