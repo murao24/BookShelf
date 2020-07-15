@@ -14,18 +14,18 @@ struct BookListView: View {
     
     @ObservedObject var bookListVM = BookListViewModel()
     
-    @State var isSheet: Bool = false
+    @State var isSubmitSheet: Bool = false
     @State var isPopup: Bool = false
-    @State var isActionSheet: Bool = false
+    @State var isSortActionSheet: Bool = false
+    @State var isSignInViewSheet: Bool = false
     @State var popupMessage: String = ""
+    @State var sortedName: String = "Default(Date Created)"
 
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    HStack{
-                        Image(systemName: "magnifyingglass")
-                    }
+                    SortCell(sortedName: $sortedName, isSortActionSheet: $isSortActionSheet)
                     WaterfallGrid(self.bookListVM.bookCellViewModels) { bookCellVM in
                         NavigationLink(destination: EditBookView(bookCellVM: bookCellVM, isPopup: self.$isPopup, popupMessage: self.$popupMessage)) {
                             SpineView(bookCellVM: bookCellVM)
@@ -34,7 +34,7 @@ struct BookListView: View {
                     .gridStyle(columns: 10, spacing: 25, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut(duration: 0.5))
                     .scrollOptions(showsIndicators: true)
                     .border(Color.secondary, width: 8)
-                    .actionSheet(isPresented: $isActionSheet) {
+                    .actionSheet(isPresented: $isSortActionSheet) {
                         ActionSheet(title: Text(""), buttons:[
                             .default(Text("Default(Date Created)"), action: {self.bookListVM.sortBook(sortedName: "createdTime")}),
                             .default(Text("Author"), action: {self.bookListVM.sortBook(sortedName: "author")}),
@@ -42,24 +42,29 @@ struct BookListView: View {
                             .cancel(Text("Cancel"))
                         ])
                     }
-                    .sheet(isPresented: self.$isSheet) {
-                        SubmitBookView(isPopup: self.$isPopup, popupMessage: self.$popupMessage)
-                    }
                     .navigationBarTitle("BookShelf")
                     .navigationBarItems(
                         leading:
                         Button(action: {
-                            self.isActionSheet.toggle()
+                            self.isSignInViewSheet.toggle()
                         }) {
                             Image(systemName: "person.circle")
                                 .resizable()
                                 .frame(width: 20, height: 20)
+                        }
+                        .sheet(isPresented: self.$isSignInViewSheet) {
+                            SignInView()
                         },
                         trailing:
-                        Button(action: { self.isSheet.toggle() }) {
+                        Button(action: {
+                            self.isSubmitSheet.toggle()
+                        }) {
                             Image(systemName: "plus")
                                 .resizable()
                                 .frame(width: 20, height: 20)
+                        }
+                        .sheet(isPresented: self.$isSubmitSheet) {
+                            SubmitBookView(isPopup: self.$isPopup, popupMessage: self.$popupMessage)
                         }
                     )
                 }
@@ -83,6 +88,27 @@ struct ContentView_Previews: PreviewProvider {
                 .environment(\.colorScheme, .light)
             BookListView()
                 .environment(\.colorScheme, .dark)
+        }
+    }
+}
+
+struct SortCell: View {
+
+    @Binding var sortedName: String
+    @Binding var isSortActionSheet: Bool
+
+    var body: some View {
+        HStack{
+            Spacer()
+            Text(sortedName)
+                .foregroundColor(.green)
+            Button(action: {
+                self.isSortActionSheet.toggle()
+            }) {
+                Image(systemName: "chevron.down")
+                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 25))
+            }
+            .foregroundColor(.green)
         }
     }
 }
