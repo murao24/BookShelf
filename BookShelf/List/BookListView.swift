@@ -22,42 +22,47 @@ struct BookListView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                WaterfallGrid(self.bookListVM.bookCellViewModels) { bookCellVM in
-                    NavigationLink(destination: EditBookView(bookCellVM: bookCellVM, isPopup: self.$isPopup, popupMessage: self.$popupMessage)) {
-                        SpineView(bookCellVM: bookCellVM)
+                VStack {
+                    HStack{
+                        Image(systemName: "magnifyingglass")
                     }
-                }
-                .gridStyle(columns: 10, spacing: 25, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut(duration: 0.5))
-                .scrollOptions(showsIndicators: true)
-                .border(Color.secondary, width: 8)
-                .actionSheet(isPresented: $isActionSheet) {
-                    ActionSheet(title: Text(""), buttons:[
-                        .default(Text("Default(Date Created)"), action: {self.bookListVM.sortBook(sortedName: "createdTime")}),
-                        .default(Text("Author"), action: {self.bookListVM.sortBook(sortedName: "author")}),
-                        .default(Text("Title"), action: {self.bookListVM.sortBook(sortedName: "title")}),
-                        .cancel(Text("Cancel"))
-                    ])
-                }
-                .sheet(isPresented: self.$isSheet) {
-                    SubmitBookView(isPopup: self.$isPopup, popupMessage: self.$popupMessage)
-                }
-                .navigationBarTitle("BookShelf")
-                .navigationBarItems(
-                    leading:
-                    Button(action: {
-                        self.isActionSheet.toggle()
-                    }) {
-                        Image(systemName: "arrow.up.arrow.down")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                    },
-                    trailing:
-                    Button(action: { self.isSheet.toggle() }) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 20, height: 20)
+                    WaterfallGrid(self.bookListVM.bookCellViewModels) { bookCellVM in
+                        NavigationLink(destination: EditBookView(bookCellVM: bookCellVM, isPopup: self.$isPopup, popupMessage: self.$popupMessage)) {
+                            SpineView(bookCellVM: bookCellVM)
+                        }
                     }
-                )
+                    .gridStyle(columns: 10, spacing: 25, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut(duration: 0.5))
+                    .scrollOptions(showsIndicators: true)
+                    .border(Color.secondary, width: 8)
+                    .actionSheet(isPresented: $isActionSheet) {
+                        ActionSheet(title: Text(""), buttons:[
+                            .default(Text("Default(Date Created)"), action: {self.bookListVM.sortBook(sortedName: "createdTime")}),
+                            .default(Text("Author"), action: {self.bookListVM.sortBook(sortedName: "author")}),
+                            .default(Text("Title"), action: {self.bookListVM.sortBook(sortedName: "title")}),
+                            .cancel(Text("Cancel"))
+                        ])
+                    }
+                    .sheet(isPresented: self.$isSheet) {
+                        SubmitBookView(isPopup: self.$isPopup, popupMessage: self.$popupMessage)
+                    }
+                    .navigationBarTitle("BookShelf")
+                    .navigationBarItems(
+                        leading:
+                        Button(action: {
+                            self.isActionSheet.toggle()
+                        }) {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        },
+                        trailing:
+                        Button(action: { self.isSheet.toggle() }) {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                    )
+                }
             }
             .popup(isPresented: $isPopup, animation: .easeOut, autohideIn: 2, closeOnTap: true) {
                 HStack() {
