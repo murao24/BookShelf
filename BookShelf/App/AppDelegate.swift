@@ -16,10 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
         FirebaseApp.configure()
         //匿名認証
-        Auth.auth().signInAnonymously()
+        if Auth.auth().currentUser == nil {
+          Auth.auth().signInAnonymously()
+        }
 
         // IQkeyboardManager
         IQKeyboardManager.shared.enable = true

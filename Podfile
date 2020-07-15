@@ -10,11 +10,10 @@ target 'BookShelf' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Core'
   pod 'SwiftyJSON'
   pod 'SDWebImageSwiftUI'
   pod 'IQKeyboardManagerSwift'
   pod 'ExytePopupView'
   pod 'WaterfallGrid', '~> 0.4.0'
-  pod "Popover"
-
 end
