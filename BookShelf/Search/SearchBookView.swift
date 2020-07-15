@@ -82,10 +82,6 @@ struct SearchedBookCell: View {
                 Text(data.title)
                 Text(data.authors)
                 Spacer()
-                Button(action: {print("tp")}) {
-                    Text("Add to your bookshelf!")
-                    .padding(7)
-                }
                 .background(Color.accentColor)
                 .cornerRadius(3)
                 Spacer()

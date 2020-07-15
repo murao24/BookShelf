@@ -14,12 +14,23 @@ struct ContentView: View {
             BookListView()
                 .tabItem {
                     Image(systemName: "book")
+                        .resizable()
+                        .frame(width: 20, height: 20)
                     Text("BookShelf")
             }
             SearchBookView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
+                        .resizable()
+                        .frame(width: 20, height: 20)
                     Text("Search")
+            }
+            SignInView()
+                .tabItem {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text("Account")
             }
         }
     }
