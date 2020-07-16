@@ -20,10 +20,9 @@ struct SpineView: View {
             """
         )
             .frame(width: 30, height: 120)
-            .border(Color.orange, width: 2)
+            .border(Color.secondary , width: 3)
             .background(Color.orange)
-            .shadow(radius: 5)
-            .cornerRadius(5)
+            .cornerRadius(2)
     }
 }
 

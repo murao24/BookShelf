@@ -18,11 +18,14 @@ class BookRepository: ObservableObject {
     
     @Published var books = [Book]()
 
+    var deletedBooks = [Book]()
+
     let userDefaults = UserDefaults.standard
 
     init() {
         userDefaults.register(defaults: ["sortName": "createdTime"])
         loadData()
+        deleteAllData()
     }
 
     func loadData() {
@@ -80,6 +83,11 @@ class BookRepository: ObservableObject {
                 print("Document successfully deleted.")
             }
         }
+    }
+
+    func deleteAllData() {
+        
+
     }
     
 }

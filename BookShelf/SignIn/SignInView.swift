@@ -15,6 +15,7 @@ struct SignInView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Text("Thank you for using this app. Please sign in here.")
                 SignInWithAppleButton()
                     .frame(width: 200, height: 45)
                     .onTapGesture {
