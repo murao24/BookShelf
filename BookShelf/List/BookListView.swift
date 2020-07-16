@@ -65,6 +65,7 @@ struct BookListView: View {
                             Image(systemName: "person.circle")
                                 .resizable()
                                 .frame(width: 20, height: 20)
+                                .foregroundColor(.orange)
                         }
                         .sheet(isPresented: self.$isSignInViewSheet) {
                             SignInView()
@@ -76,6 +77,7 @@ struct BookListView: View {
                             Image(systemName: "plus")
                                 .resizable()
                                 .frame(width: 20, height: 20)
+                                .foregroundColor(.orange)
                         }
                         .sheet(isPresented: self.$isSubmitSheet) {
                             SubmitBookView(isPopup: self.$isPopup, popupMessage: self.$popupMessage)
@@ -116,14 +118,14 @@ struct SortCell: View {
             Spacer()
             Text(sortedName)
                 .font(.subheadline)
-                .foregroundColor(.green)
+                .foregroundColor(.orange)
             Button(action: {
                 self.isSortActionSheet.toggle()
             }) {
                 Image(systemName: "chevron.down")
                     .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 25))
             }
-            .foregroundColor(.green)
+            .foregroundColor(.orange)
         }
     }
 }
