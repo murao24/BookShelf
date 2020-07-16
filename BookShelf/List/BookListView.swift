@@ -31,16 +31,30 @@ struct BookListView: View {
                             SpineView(bookCellVM: bookCellVM)
                         }
                     }
-                    .gridStyle(columns: 10, spacing: 25, padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20), animation: .easeInOut(duration: 0.5))
-                    .scrollOptions(showsIndicators: true)
-                    .border(Color.secondary, width: 8)
-                    .actionSheet(isPresented: $isSortActionSheet) {
-                        ActionSheet(title: Text(""), buttons:[
-                            .default(Text("Default(Date Created)"), action: {self.bookListVM.sortBook(sortedName: "createdTime")}),
-                            .default(Text("Author"), action: {self.bookListVM.sortBook(sortedName: "author")}),
-                            .default(Text("Title"), action: {self.bookListVM.sortBook(sortedName: "title")}),
-                            .cancel(Text("Cancel"))
-                        ])
+                    .gridStyle(
+                        columns: 10,
+                        spacing: 5,
+                        padding: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
+                        animation: .easeInOut(duration: 0.5)
+                    )
+                        .scrollOptions(showsIndicators: true)
+                        .border(Color.secondary, width: 8)
+                        .actionSheet(isPresented: $isSortActionSheet) {
+                            ActionSheet(title: Text(""), buttons:[
+                                .default(Text("Default(Date Created)"), action: {
+                                    self.bookListVM.sortBook(sortedName: "createdTime")
+                                    self.sortedName = "Default(Date Created)"
+                                }),
+                                .default(Text("Author"), action: {
+                                    self.bookListVM.sortBook(sortedName: "author")
+                                    self.sortedName = "Author"
+                                }),
+                                .default(Text("Title"), action: {
+                                    self.bookListVM.sortBook(sortedName: "title")
+                                    self.sortedName = "Title"
+                                }),
+                                .cancel(Text("Cancel"))
+                            ])
                     }
                     .navigationBarTitle("BookShelf")
                     .navigationBarItems(
@@ -101,6 +115,7 @@ struct SortCell: View {
         HStack{
             Spacer()
             Text(sortedName)
+                .font(.subheadline)
                 .foregroundColor(.green)
             Button(action: {
                 self.isSortActionSheet.toggle()

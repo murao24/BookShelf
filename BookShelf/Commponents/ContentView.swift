@@ -25,13 +25,6 @@ struct ContentView: View {
                         .frame(width: 20, height: 20)
                     Text("Search")
             }
-            SignInView()
-                .tabItem {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                    Text("Account")
-            }
         }
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 import CryptoKit
 import AuthenticationServices
 import Firebase
+import FirebaseAuth
 
 class SignInWithAppleCoordinator: NSObject, ASAuthorizationControllerPresentationContextProviding {
 
