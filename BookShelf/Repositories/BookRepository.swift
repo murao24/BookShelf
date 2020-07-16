@@ -17,20 +17,23 @@ class BookRepository: ObservableObject {
     let db = Firestore.firestore()
     
     @Published var books = [Book]()
-    @Published var sortedName = "createdTime"
-    @Published var descending: Bool = true
-    
+
+    let userDefaults = UserDefaults.standard
+
     init() {
+        userDefaults.register(defaults: ["sortName": "createdTime"])
         loadData()
     }
-    
+
     func loadData() {
-        
+
+        let key: String = userDefaults.object(forKey: "sortName") as! String
+
         let userId = Auth.auth().currentUser?.uid
 
         db.collection("books")
-            .order(by: sortedName, descending: true)
-            .whereField("userId", isEqualTo: userId!)
+            .order(by: key, descending: true)
+            .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     self.books = querySnapshot.documents.compactMap { document in

@@ -27,7 +27,6 @@ class BookCellViewModel: ObservableObject, Identifiable {
         }
         .assign(to: \.id, on: self)
         .store(in: &cancellable)
-
         
     }
 

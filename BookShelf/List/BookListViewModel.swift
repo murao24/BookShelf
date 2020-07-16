@@ -12,6 +12,9 @@ import Combine
 class BookListViewModel: ObservableObject {
     @Published var bookRepository = BookRepository()
     @Published var bookCellViewModels = [BookCellViewModel]()
+    @Published var sortName: String = ""
+
+    let userDefaults = UserDefaults.standard
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -24,6 +27,8 @@ class BookListViewModel: ObservableObject {
         }
         .assign(to: \.bookCellViewModels, on: self)
         .store(in: &cancellables)
+
+        sortName = userDefaults.object(forKey: "sortName") as! String
     }
 
     func deleteBook(_ bookID: String?) {
@@ -32,8 +37,9 @@ class BookListViewModel: ObservableObject {
         }
     }
 
-    func sortBook(sortedName: String) {
-        bookRepository.sortedName = sortedName
+    func sortBook(sortName: String) {
+        userDefaults.set(sortName, forKey: "sortName")
+        self.sortName = userDefaults.object(forKey: "sortName") as! String
         bookRepository.loadData()
     }
 

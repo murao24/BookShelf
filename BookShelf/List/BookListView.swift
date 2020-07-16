@@ -19,13 +19,12 @@ struct BookListView: View {
     @State var isSortActionSheet: Bool = false
     @State var isSignInViewSheet: Bool = false
     @State var popupMessage: String = ""
-    @State var sortedName: String = "Default(Date Created)"
 
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    SortCell(sortedName: $sortedName, isSortActionSheet: $isSortActionSheet)
+                    SortCell(sortedName: $bookListVM.sortName, isSortActionSheet: $isSortActionSheet)
                     WaterfallGrid(self.bookListVM.bookCellViewModels) { bookCellVM in
                         NavigationLink(destination: EditBookView(bookCellVM: bookCellVM, isPopup: self.$isPopup, popupMessage: self.$popupMessage)) {
                             SpineView(bookCellVM: bookCellVM)
@@ -42,16 +41,13 @@ struct BookListView: View {
                         .actionSheet(isPresented: $isSortActionSheet) {
                             ActionSheet(title: Text(""), buttons:[
                                 .default(Text("Default(Date Created)"), action: {
-                                    self.bookListVM.sortBook(sortedName: "createdTime")
-                                    self.sortedName = "Default(Date Created)"
+                                    self.bookListVM.sortBook(sortName: "createdTime")
                                 }),
                                 .default(Text("Author"), action: {
-                                    self.bookListVM.sortBook(sortedName: "author")
-                                    self.sortedName = "Author"
+                                    self.bookListVM.sortBook(sortName: "author")
                                 }),
                                 .default(Text("Title"), action: {
-                                    self.bookListVM.sortBook(sortedName: "title")
-                                    self.sortedName = "Title"
+                                    self.bookListVM.sortBook(sortName: "title")
                                 }),
                                 .cancel(Text("Cancel"))
                             ])
