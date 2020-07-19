@@ -67,11 +67,3 @@ struct SubmitBookView: View {
         }
     }
 }
-
-//struct SubmitBookView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubmitBookView(isPopup: )
-//    }
-//}
-
-

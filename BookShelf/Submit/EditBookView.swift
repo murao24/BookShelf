@@ -94,9 +94,3 @@ struct EditBookView: View {
         }
     }
 }
-
-//struct BookDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditBookView(bookCellVM: BookCellViewModel(book: Book(title: "String", author: "", rating: 4, review: "", start: Date(), end: Date())))
-//    }
-//}
