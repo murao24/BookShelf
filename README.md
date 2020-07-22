@@ -13,7 +13,7 @@ MVVMで作成しましたが、設計を意識した開発は初めてなので�
 - 開発言語 : Swift  
 - フレームワーク : SwiftUI  
 - 設計 : MVVM + Combine  
-- データベース : Firebase  
+- データベース : Firebase(Cloud FireStore)
 - ユーザー認証 : 匿名認証、Sign In With Apple  
 - パッケージ管理 : Cocoapods  
 - バージョン管理 : Git  
